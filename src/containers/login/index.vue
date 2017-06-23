@@ -1,7 +1,13 @@
 <template>
-  <div>
-    Login
-    <button @click="login">Login</button>
+  <div class="login">
+    <div class="_flex-column _cross-center">
+      <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
+      <div class="_full-width">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+          <button class="lunar-button _bg-color-accent _full-width" @click="login">Login</button>
+        </div>
+      </div>
+    </div>
     <audio src="https://storage.googleapis.com/mercenary-714ba.appspot.com/bgm/login.mp3" type="audio/mp3" autoplay></audio>
   </div>
 </template>
@@ -19,5 +25,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.login {
+  background-image: url('~@/assets/bg/bg3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media only screen and (min-width: 970px) {
+    background-image: url('~@/assets/bg/bg3d.jpg');
+  }
+  > div {
+    padding-top: 64px;
+  }
+}
 </style>
