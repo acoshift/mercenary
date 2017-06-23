@@ -63,11 +63,23 @@
 </template>
 
 <script>
+import { Auth } from '@/services'
 import LobbyCard from './LobbyCard'
+
 export default {
   name: 'Home',
   components: {
     LobbyCard
+  },
+  methods: {
+    logout () {
+      Auth.logout()
+        .subscribe(
+          () => {
+            this.$router.push('/')
+          }
+        )
+    }
   }
 }
 </script>

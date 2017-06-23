@@ -1,9 +1,11 @@
 import './init'
 import firebase from 'firebase'
-import { BehaviorSubject } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 import axios from 'axios'
 
 export const login = () => firebase.auth().signInWithRedirect(new firebase.auth.FacebookAuthProvider())
+
+export const logout = () => Observable.fromPromise(firebase.auth().signOut())
 
 const initUser = {}
 const $currentUser = new BehaviorSubject(initUser)
