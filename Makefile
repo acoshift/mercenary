@@ -1,8 +1,9 @@
 dev:
 	node build/dev-server.js
 
+.PHONY: build
 build:
 	node build/build.js
 
-deploy:
+deploy: build
 	firebase deploy
