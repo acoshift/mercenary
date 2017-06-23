@@ -41,6 +41,10 @@ export default new Router({
       path: '/battle',
       name: 'Battle',
       component: Battle
+    },
+    {
+      path: '*',
+      redirect: 'checkin'
     }
   ]
 })

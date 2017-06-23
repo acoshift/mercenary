@@ -1,0 +1,15 @@
+.lunar-header {
+  font-size: 32px;
+  margin-bottom: 16px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+}
+.lunar-word-breakeable {
+  word-break: break-all;
+}
+.lunar-link {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
