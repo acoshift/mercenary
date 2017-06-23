@@ -7,9 +7,11 @@ import Lobby from '@/containers/lobby'
 import Battle from '@/containers/battle'
 import Classes from '@/containers/classes'
 
+import { Auth } from '@/services'
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -20,27 +22,32 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: { auth: true }
     },
     {
       path: '/collection',
       name: 'Collection',
-      component: Collection
+      component: Collection,
+      meta: { auth: true }
     },
     {
       path: '/lobby',
       name: 'Lobby',
-      component: Lobby
+      component: Lobby,
+      meta: { auth: true }
     },
     {
       path: '/classes',
       name: 'Classes',
-      component: Classes
+      component: Classes,
+      meta: { auth: true }
     },
     {
       path: '/battle',
       name: 'Battle',
-      component: Battle
+      component: Battle,
+      meta: { auth: true }
     },
     {
       path: '*',
@@ -48,3 +55,23 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  Auth.currentUser
+    .first()
+    .subscribe(
+      (user) => {
+        if (to.meta.auth && !user) {
+          next('/')
+          return
+        }
+        if (!to.meta.auth && user) {
+          next('/home')
+          return
+        }
+        next()
+      }
+    )
+})
+
+export default router
