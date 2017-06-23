@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <header>
-      <span>Vue.js PWA</span>
-    </header>
-    <main>
-      <router-view></router-view>
-    </main>
+    <router-view></router-view>
   </div>
 </template>
 
