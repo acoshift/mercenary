@@ -5,16 +5,16 @@
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
           <div class="_font-size-big">Home</div>
-          <a href class="_color-accent">
+          <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
-          </a>
+          </router-link>
         </div>
       </div>
 
       <div class="navbar-dummy">
       </div>
 
-      <div class="lobby _flex-span _bg-color-base">
+      <div class="content _flex-span _bg-color-base">
         <div class="grid-container row">
 
           <div class="col-xs-12">
@@ -90,7 +90,7 @@ $navbar-height: 50px;
   height: $navbar-height;
 }
 
-.lobby {
+.content {
   overflow: auto;
   padding-top: 16px;
   background-color: black;
