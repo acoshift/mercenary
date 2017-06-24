@@ -55,14 +55,14 @@
 </template>
 
 <script>
-import { Boss, Job } from '@/services'
+import { Boss, Job, Room } from '@/services'
 
 export default {
   name: 'Create',
   data () {
     return {
-      selectedBoss: 0,
-      selectedJob: 0
+      selectedBoss: '',
+      selectedJob: ''
     }
   },
   subscriptions () {
@@ -76,7 +76,16 @@ export default {
       this.$router.go(-1)
     },
     create () {
-      this.$router.push('/lobby')
+      if (!this.selectedJob || !this.selectedJob) {
+        return
+      }
+
+      Room.create(this.selectedBoss, this.selectedJob)
+        .subscribe(
+          (id) => {
+            this.$router.push({ name: 'Lobby', params: { id } })
+          }
+        )
     }
   }
 }

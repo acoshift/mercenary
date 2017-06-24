@@ -82,6 +82,12 @@
 <script>
 export default {
   name: 'Lobby',
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     back () {
       this.$router.go(-1)

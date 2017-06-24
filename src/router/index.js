@@ -33,9 +33,10 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/lobby',
+      path: '/lobby/{id}',
       name: 'Lobby',
       component: Lobby,
+      props: (to) => ({ id: to.params.id }),
       meta: { auth: true }
     },
     {
@@ -45,9 +46,10 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/join',
+      path: '/join/{id}',
       name: 'Join',
       component: Join,
+      props: (to) => ({ id: to.params.id }),
       meta: { auth: true }
     },
     {

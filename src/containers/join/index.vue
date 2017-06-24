@@ -56,14 +56,21 @@
 </template>
 
 <script>
-import { Boss, Job } from '@/services'
+import { Boss, Job, Room } from '@/services'
 
 export default {
   name: 'Join',
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   subscriptions () {
     return {
       bosses: Boss.list(),
-      jobs: Job.list()
+      jobs: Job.list(),
+      room: Room.get(this.id).do(console.log)
     }
   },
   data () {

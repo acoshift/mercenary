@@ -20,7 +20,26 @@ export const onceValue = (path) => Observable
   .fromPromise(database.ref(path).once('value'))
   .map((snapshot) => snapshot.val())
 
+export const onValue = (path) => Observable
+  .create((o) => {
+    const ref = database.ref(path)
+    const cb = ref.on(
+      'value',
+      (snapshot) => { o.next(snapshot.val()) },
+      (err) => { o.error(err) }
+    )
+    return () => ref.off('value', cb)
+  })
+
+export const push = (path, data) => Observable
+  .fromPromise(database.ref(path).push(data))
+
+export const set = (path, data) => Observable
+  .fromPromise(database.ref(path).set(data))
+
 export default {
   cache,
-  onceValue
+  onceValue,
+  onValue,
+  push
 }
