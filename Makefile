@@ -7,3 +7,12 @@ build:
 
 deploy: build
 	firebase deploy
+
+deploy-hosting: build
+	firebase deploy --only hosting
+
+deploy-database:
+	firebase deploy --only database
+
+deploy-functions:
+	firebase deploy --only functions
