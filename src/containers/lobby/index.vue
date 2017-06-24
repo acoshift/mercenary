@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { Room, SFX } from '@/services'
+import { Room, SFX, Loader } from '@/services'
 import firebase from 'firebase'
 
 export default {
@@ -77,15 +77,10 @@ export default {
         .do(() => { this.$router.push('/battle') })
     }
   },
-  data () {
-    return {
-      loading: false
-    }
-  },
   computed: {
     isHost () {
       if (!this.room) return false
-      return this.room.host.$key === firebase.auth().currentUser.uid
+      return this.room.host.id === firebase.auth().currentUser.uid
     }
   },
   methods: {
@@ -99,7 +94,6 @@ export default {
         )
     },
     startGame () {
-      console.log(Loader)
       Loader.start()
       return
       // SFX.playClick()

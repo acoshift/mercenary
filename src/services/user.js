@@ -3,6 +3,7 @@ import firebase from 'firebase'
 
 export const get = (id) => Firebase
   .onceValue(`user/${id}/profile`)
+  .map((x) => ({ ...x, id }))
 
 export const setCurrentRoom = (roomId) => Firebase
   .set(`user/${firebase.auth().currentUser.uid}/current-room`, roomId)

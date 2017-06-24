@@ -9,11 +9,12 @@
 
 <script>
 import { Loader } from '@/services'
+
 export default {
   name: 'app',
-  computed: {
-    isViewLoading () {
-      return Loader.loading
+  subscriptions () {
+    return {
+      isViewLoading: Loader.isLoading
     }
   }
 }

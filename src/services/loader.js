@@ -1,17 +1,13 @@
-import Vue from 'vue'
+import { BehaviorSubject } from 'rxjs'
 
-export default new Vue({
-  data () {
-    return {
-      loading: false
-    }
-  },
-  methods: {
-    start () {
-      this.loading = true
-    },
-    stop () {
-      this.loading = false
-    }
-  }
-})
+const $loader = new BehaviorSubject(false)
+
+export const isLoading = $loader.asObservable()
+
+export const start = () => {
+  $loader.next(true)
+}
+
+export const stop = () => {
+  $loader.next(false)
+}
