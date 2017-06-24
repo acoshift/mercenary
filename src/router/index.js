@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
     .first()
     .flatMap((user) =>
       user
-        ? User.getCurrentRoom().do(console.log)
+        ? User.getCurrentRoom()
           .flatMap((id) => id ? Room.get(id) : Observable.of(null))
         : Observable.of(user),
       (user, room) => ([ user, room ]))

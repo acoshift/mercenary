@@ -50,8 +50,11 @@
 
               </div>
 
-              <div class="lunar-button2 -negative" @click="startGame">
+              <div v-if="isHost" class="lunar-button2 -negative" @click="startGame">
                 Start Game
+              </div>
+              <div v-else class="lunar-button2 -negative -disable">
+                Waiting host to start
               </div>
             </div>
           </div>
@@ -62,7 +65,8 @@
 </template>
 
 <script>
-import { Room, SFX, Loader } from '@/services'
+import { Room, SFX } from '@/services'
+import firebase from 'firebase'
 
 export default {
   name: 'Lobby',
@@ -76,6 +80,12 @@ export default {
   data () {
     return {
       loading: false
+    }
+  },
+  computed: {
+    isHost () {
+      if (!this.room) return false
+      return this.room.host.$key === firebase.auth().currentUser.uid
     }
   },
   methods: {

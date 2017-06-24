@@ -45,7 +45,8 @@
         "status": {},
         "member": {
           "$user_id": {
-            ".validate": "$user_id === auth.uid && root.child('job/' + newData.val()).exists()"
+            ".write": "$user_id === auth.uid",
+            ".validate": "$user_id === auth.uid && (newData.val() === null || root.child('job/' + newData.val()).exists())"
           }
         },
         ".validate": "newData.hasChildren(['host', 'boss', 'member'])"

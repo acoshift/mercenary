@@ -6,7 +6,7 @@
         <div class="_full-width">
           <div class="col-xs-12">
             <button class="lunar-button2 _bg-color-accent _full-width" @click="login">
-              <h3 class="_no-margin">Login</h3>
+              <h3 class="_no-margin">Login with Facebook</h3>
             </button>
           </div>
         </div>

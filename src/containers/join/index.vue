@@ -75,7 +75,7 @@ export default {
     return {
       jobs: Job.list()
         .do((list) => {
-          this.selectedJob = Object.keys(list)[0]
+          this.selectedJob = list[0].$key
         }),
       room: Room.get(this.id)
         .flatMap((r) => Boss.get(r.boss), (r, boss) => ({ ...r, boss }))
@@ -83,13 +83,18 @@ export default {
   },
   data () {
     return {
-      selectedJob: 0
+      selectedJob: ''
     }
   },
   methods: {
     join () {
       SFX.playClick()
-      this.$router.push('/lobby')
+      Room.join(this.id, this.selectedJob)
+        .subscribe(
+          () => {
+            this.$router.push('/lobby')
+          }
+        )
     },
     back () {
       SFX.playClick()
