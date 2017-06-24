@@ -5,7 +5,7 @@
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
           <div class="_font-size-big" @click="logout">Logout</div>
-          <div>สมชาย</div>
+          <div v-if="currentUser">{{currentUser.name}}</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
           </router-link>
@@ -42,6 +42,8 @@ export default {
   },
   subscriptions () {
     return {
+      currentUser: Auth.currentUser
+        .flatMap((user) => User.get(user.uid)),
       rooms: Room.list()
         .flatMap((list) => Observable
           .from(list)
