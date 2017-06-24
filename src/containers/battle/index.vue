@@ -74,7 +74,7 @@
                   <div class="skill">
                     <img src="~@/assets/skill/defend.png" alt="attack" width="100%"
                     :class="{disabled: false}"
-                     @click="playBossIsAttack">
+                     @click="playBossIsAttacked">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
                     </div>
@@ -102,10 +102,12 @@
 </template>
 
 <script>
+import { SFX } from '@/services'
 export default {
   name: 'Battle',
   methods: {
     playBossAttack () {
+      SFX.playBossAttack()
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -120,6 +122,7 @@ export default {
       }, 1300)
     },
     playBossIsAttacked () {
+      SFX.playAttack()
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -134,6 +137,7 @@ export default {
       }, 1300)
     },
     playBossIsStunned () {
+      SFX.playSkillMage()
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
