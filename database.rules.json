@@ -27,7 +27,7 @@
           ".write": "!data.exists()"
         },
         "boss": {
-          ".write": "!data.exists()"
+          ".write": "!data.exists() && root.child('boss/' + data.val()).exists()"
         },
         "status": {
         },

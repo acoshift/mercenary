@@ -14,7 +14,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
   if (user) {
     // add user data if not exists
-    firebase.database().ref(`user/${user.uid}`).once('value', (snapshot) => {
+    firebase.database().ref(`user/${user.uid}/profile`).once('value', (snapshot) => {
       const data = snapshot.val()
       if (!data) {
         // upload user image
@@ -23,7 +23,7 @@ firebase.auth().onAuthStateChanged((user) => {
             .ref(`/user/${user.uid}`)
             .put(res.data, { cacheControl: 'public, max-age=7200' })
             .then((f) => {
-              firebase.database().ref(`user/${user.uid}`).set({
+              firebase.database().ref(`user/${user.uid}/profile`).set({
                 name: user.displayName,
                 photo: f.downloadURL
               })
