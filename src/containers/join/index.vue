@@ -81,7 +81,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Join',
   data () {
     return {
       selectedBoss: 0,
