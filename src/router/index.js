@@ -8,6 +8,7 @@ import Battle from '@/containers/battle'
 import Create from '@/containers/create'
 import Join from '@/containers/join'
 
+import { Observable } from 'rxjs'
 import { Auth, User, Room } from '@/services'
 
 Vue.use(Router)
@@ -68,21 +69,20 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   Auth.currentUser
     .first()
+    .flatMap((user) =>
+      user
+        ? User.getCurrentRoom()
+          .flatMap((id) => id ? Room.get(id) : Observable.of(null))
+        : Observable.of(user),
+      (user, room) => ({ ...user, room }))
     .subscribe(
-      (user) => {
-        if (user && (to.name !== 'Lobby' && to.name !== 'Battle')) {
-          User.getCurrentRoom()
-            .filter((id) => !!id)
-            .flatMap((id) => Room.get(id).do(console.log).filter((x) => !!x))
-            .subscribe(
-              (room) => {
-                if (room.state === 'battle') {
-                  next({ name: 'Battle', params: { id: room.$key } })
-                  return
-                }
-                next({ name: 'Lobby', params: { id: room.$key } })
-              }
-            )
+      (user, room) => {
+        if (user && (to.name !== 'Lobby' && to.name !== 'Battle') && room) {
+          if (room.state === 'battle') {
+            next({ name: 'Battle', params: { id: room.$key } })
+            return
+          }
+          next({ name: 'Lobby', params: { id: room.$key } })
         }
         if (to.meta.auth && !user) {
           next('/')
