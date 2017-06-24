@@ -34,7 +34,7 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/lobby/:id',
+      path: '/lobby',
       name: 'Lobby',
       component: Lobby,
       props: (to) => ({ id: to.params.id }),
@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
     .first()
     .flatMap((user) =>
       user
-        ? User.getCurrentRoom().do(console.log)
+        ? User.getCurrentRoom()
           .flatMap((id) => id ? Room.get(id) : Observable.of(null))
         : Observable.of(user),
       (user, room) => ([ user, room ]))
@@ -79,10 +79,10 @@ router.beforeEach((to, from, next) => {
       ([ user, room ]) => {
         if (user && (to.name !== 'Lobby' && to.name !== 'Battle') && room) {
           if (room.state === 'battle') {
-            next({ name: 'Battle', params: { id: room.$key } })
+            next({ name: 'Battle' })
             return
           }
-          next({ name: 'Lobby', params: { id: room.$key } })
+          next({ name: 'Lobby' })
           return
         }
         if (to.meta.auth && !user) {

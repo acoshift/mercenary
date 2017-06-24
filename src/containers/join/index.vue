@@ -89,7 +89,7 @@ export default {
   methods: {
     join () {
       SFX.playClick()
-      this.$router.push('/lobby/12345')
+      this.$router.push('/lobby')
     },
     back () {
       SFX.playClick()

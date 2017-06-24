@@ -93,7 +93,7 @@ export default {
         .subscribe(
           (id) => {
             console.log(id)
-            // this.$router.push({ name: 'Lobby', params: { id } })
+            // this.$router.push({ name: 'Lobby'})
           }
         )
     },

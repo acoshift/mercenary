@@ -62,48 +62,13 @@
 </template>
 
 <script>
-import { Room, User, Boss, Job, SFX } from '@/services'
-import { Observable } from 'rxjs'
-import firebase from 'firebase'
+import { Room, SFX } from '@/services'
 
 export default {
   name: 'Lobby',
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
   subscriptions () {
     return {
-      room: Room.get(this.id)
-        .flatMap((r) => Observable.forkJoin(
-          User.get(r.host),
-          Boss.get(r.boss),
-          Observable.from(Object.keys(r.member).map((id) => ({ id, job: r.member[id] })))
-            .flatMap((m) =>
-              Observable.forkJoin(
-                User.get(m.id),
-                Job.get(m.job)
-              ),
-              (m, [ u, job ]) => ({ ...m, ...u, job })
-            )
-            .toArray()
-        ), (r, [ host, boss, member ]) => ({ ...r, host, boss, member }))
-        .do((r) => {
-          const m = r.member
-          r.member = [null, null, null, null, null]
-          const me = m.findIndex((x) => x.id === firebase.auth().currentUser.uid)
-          r.member[0] = m[me]
-          m[me] = null
-          let i = 1
-          m.forEach((x) => {
-            if (x) {
-              r.member[i] = x
-              i++
-            }
-          })
-        })
+      room: Room.getMemberRoom()
         .do(console.log)
     }
   },
