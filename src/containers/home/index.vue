@@ -4,7 +4,7 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big">Home</div>
+          <div class="_font-size-big" @click="logout">Logout</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
           </router-link>
@@ -63,27 +63,18 @@
 </template>
 
 <script>
-import { Auth } from '@/services'
+import
 import LobbyCard from './LobbyCard'
-
 export default {
   name: 'Home',
   components: {
     LobbyCard
   },
   methods: {
-<<<<<<< Updated upstream
-    logout () {
-      Auth.logout()
-        .subscribe(
-          () => {
-            this.$router.push('/')
-          }
-        )
-=======
     create () {
       this.$router.push('/create')
->>>>>>> Stashed changes
+    },
+    logout () {
     }
   }
 }
