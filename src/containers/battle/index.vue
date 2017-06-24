@@ -63,7 +63,7 @@
                     <img
                       src="~@/assets/skill/fireball.png" alt="attack" width="100%"
                       :class="{disabled: true}"
-                      @click="testBossAttack3">
+                      @click="testBossStunned">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 3</h4>
                     </div>
@@ -73,7 +73,7 @@
                   <div class="skill">
                     <img src="~@/assets/skill/defend.png" alt="attack" width="100%"
                     :class="{disabled: false}"
-                     @click="testBossAttack2">
+                     @click="testBossAttacked">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
                     </div>
@@ -118,7 +118,7 @@ export default {
         boss.className += ' move'
       }, 1300)
     },
-    testBossAttack2 () {
+    testBossAttacked () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -132,7 +132,7 @@ export default {
         boss.className += ' move'
       }, 1300)
     },
-    testBossAttack3 () {
+    testBossStunned () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -246,7 +246,7 @@ export default {
     img {
       animation-name: bossStunned;
       animation-iteration-count: infinite;
-      animation-duration: 2s;
+      animation-duration: .5s;
     }
   }
 }
@@ -269,8 +269,9 @@ export default {
 }
 
 @keyframes bossStunned {
-  0% {top: 0px}
-  50% {top: -20px}
-  100% {top: 0px}
+  0% {transform: rotate(0deg)}
+  35% {transform: rotate(7deg)}
+  65% {transform: rotate(0deg)}
+  100% {transform: rotate(-7deg)}
 }
 </style>
