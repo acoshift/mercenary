@@ -42,7 +42,6 @@
         "boss": {
           ".validate": "!data.exists() && root.child('boss/' + newData.val()).exists()"
         },
-        "status": {},
         "member": {
           "$user_id": {
             ".write": "$user_id === auth.uid",
@@ -54,8 +53,12 @@
     },
     "room": {
       "$room_id": {
+        ".write": "!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid",
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "boss": {
+          "id": {
+            ".validate": "root.child('boss/' + newData.val()).exists()"
+          }
         },
         "send": {
           "$event_id": {

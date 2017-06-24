@@ -4,7 +4,6 @@ import * as User from './user'
 import * as Boss from './boss'
 import * as Job from './job'
 import { Observable } from 'rxjs'
-import ev from './event'
 
 export const create = (bossId, jobId) => Firebase // ev
   .push('room-member', {
@@ -76,8 +75,20 @@ export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
   .flatMap(() => User.setCurrentRoom(roomId))
 
-export const start = (roomId) => ev
-  .push({
-    a: 'start',
-    roomId
-  })
+export const start = () => getMemberRoom()
+  .flatMap((room) => Firebase.set(`room/${room.$key}`, {
+    boss: {
+      id: room.boss.$key,
+      name: room.boss.name,
+      photo: room.boss.photo,
+      hp: room.boss.hp,
+      atk: room.boss.atk
+    },
+    member: room.member.map((x) => x ? ({
+      id: x.id,
+      name: x.name,
+      photo: x.photo,
+      hp: x.job.hp,
+      jobPhoto: x.job.photo
+    }) : null)
+  }), (room) => room)
