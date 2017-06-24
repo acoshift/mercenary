@@ -35,15 +35,14 @@
     "room-member": {
       ".read": true,
       "$room_id": {
-        ".write": "!data.exists()",
+        ".write": "!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)",
         "host": {
           ".validate": "!data.exists() && newData.val() === auth.uid"
         },
         "boss": {
           ".validate": "!data.exists() && root.child('boss/' + newData.val()).exists()"
         },
-        "status": {
-        },
+        "status": {},
         "member": {
           "$user_id": {
             ".validate": "$user_id === auth.uid && root.child('job/' + newData.val()).exists()"
