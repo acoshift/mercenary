@@ -82,6 +82,7 @@ export const start = () => getMemberRoom()
       name: room.boss.name,
       photo: room.boss.photo,
       hp: room.boss.hp,
+      maxHp: room.boss.hp,
       atk: room.boss.atk
     },
     member: room.member.map((x) => x ? ({
@@ -89,6 +90,7 @@ export const start = () => getMemberRoom()
       name: x.name,
       photo: x.photo,
       hp: x.job.hp,
+      maxHp: x.job.hp,
       jobPhoto: x.job.photo
     }) : null)
   }), (room) => room)

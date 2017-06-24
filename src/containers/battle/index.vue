@@ -10,8 +10,8 @@
               <div class="bar" :style="{width: `${bossHpPercent}%`}"></div>
             </div>
 
-            <div id="boss" class="boss-avatar move">
-              <img src="~@/assets/enemy/enemy3-s.png" alt="boss" width="60%">
+            <div id="boss" class="boss-avatar move" v-if="room">
+              <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
             </div>
 
             <div class="player _flex-column _main-end _flex-span">
@@ -106,9 +106,15 @@
 </template>
 
 <script>
-import { SFX } from '@/services'
+import { SFX, Room } from '@/services'
+
 export default {
   name: 'Battle',
+  subscriptions () {
+    return {
+      room: Room.getBattleRoom().do(console.log)
+    }
+  },
   methods: {
     playBossAttack () {
       let boss = document.getElementById('boss')
