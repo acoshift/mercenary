@@ -15,45 +15,14 @@
             </div>
 
             <div class="player _flex-column _main-end _flex-span">
-              <div class="party lunar-block-big">
+              <div class="party lunar-block-big" v-if="room">
 
-                <div class="member _flex-row lunar-block">
+                <div v-for="m in members" v-if="m" class="member _flex-row lunar-block">
                   <img src="~@/assets/skill/heal.png" width="30" height="30">
                   <div class="_flex-column _flex-span">
-                    <div class="_color-light"><strong>สมชาย</strong></div>
+                    <div class="_color-light"><strong>{{m.name}}</strong></div>
                     <div class="member-hp">
-                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="member _flex-row lunar-block">
-                  <img src="~@/assets/skill/heal.png" width="30" height="30">
-                  <div class="_flex-column _flex-span">
-                    <div class="_color-light"><strong>สมชาย</strong></div>
-                    <div class="member-hp">
-                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="member _flex-row lunar-block">
-                  <img src="~@/assets/skill/heal.png" width="30" height="30">
-                  <div class="_flex-column _flex-span">
-                    <div class="_color-light"><strong>สมชาย</strong></div>
-                    <div class="member-hp">
-                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="member _flex-row lunar-block">
-                  <img src="~@/assets/skill/heal.png" width="30" height="30">
-                  <div class="_flex-column _flex-span">
-                    <div class="_color-light"><strong>สมชาย</strong></div>
-                    <div class="member-hp">
-                      <div class="bar" :style="{width: `${memberHpPercent}%`}">
-                      </div>
+                      <div class="bar" :style="{width: `${hpPercent(m.hp, m.maxHp)}%`}"></div>
                     </div>
                   </div>
                 </div>
@@ -92,7 +61,7 @@
               <div class="player-hp">
                 <div class="bar _align-center _color-light" :style="{width: `${selfHpPercent}%`}"></div>
                 <div class="hp _align-center _color-light">
-                  <strong>150</strong>
+                  <strong v-if="room">{{room.member[0].hp}}</strong>
                 </div>
               </div>
 
@@ -167,17 +136,23 @@ export default {
       boss.classList.remove('attacking')
       boss.classList.remove('stunned')
       boss.classList.remove('move')
+    },
+    hpPercent (current, max) {
+      return current / max * 100
     }
   },
   computed: {
     bossHpPercent () {
-      return 75
+      if (!this.room) return 0
+      return this.hpPercent(this.room.boss.hp, this.room.boss.maxHp)
     },
     selfHpPercent () {
-      return 90
+      if (!this.room) return 0
+      return this.hpPercent(this.room.member[0].hp, this.room.member[0].maxHp)
     },
-    memberHpPercent () {
-      return 30
+    members () {
+      if (!this.room) return []
+      return this.room.member.filter((x, k) => (k !== 0) && !!x)
     }
   }
 }

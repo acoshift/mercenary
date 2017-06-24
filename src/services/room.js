@@ -70,6 +70,20 @@ export const getBattleRoom = () => User
   .getCurrentRoom()
   .flatMap((roomId) => Firebase.onValue(`room/${roomId}`))
   .filter(Boolean)
+  .do((r) => {
+    const m = r.member
+    r.member = [null, null, null, null, null]
+    const me = m.findIndex((x) => x.id === firebase.auth().currentUser.uid)
+    r.member[0] = m[me]
+    m[me] = null
+    let i = 1
+    m.forEach((x) => {
+      if (x) {
+        r.member[i] = x
+        i++
+      }
+    })
+  })
 
 export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
