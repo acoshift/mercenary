@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { Room, SFX } from '@/services'
+import { Room, SFX, Loader } from '@/services'
 
 export default {
   name: 'Lobby',
@@ -89,9 +89,12 @@ export default {
         )
     },
     startGame () {
-      SFX.playClick()
-      this.loading = true
-      Room.start()
+      console.log(Loader)
+      Loader.start()
+      return
+      // SFX.playClick()
+      // this.loading = true
+      // Room.start()
     }
   }
 }

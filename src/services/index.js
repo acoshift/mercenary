@@ -4,6 +4,7 @@ import * as Boss from './boss'
 import * as Job from './job'
 import * as User from './user'
 import * as SFX from './sfx'
+import * as Loader from './loader'
 
 export {
   Auth,
@@ -11,5 +12,6 @@ export {
   Boss,
   Job,
   User,
-  SFX
+  SFX,
+  Loader
 }
