@@ -16,7 +16,7 @@
       </div>
 
       <div class="content _flex-span _bg-color-base">
-        <div class="grid-container row">
+        <div class="grid-container row" style="max-width: 500px">
 
           <div class="col-xs-12" @click="join">
             <LobbyCard>
