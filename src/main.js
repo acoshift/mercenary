@@ -4,6 +4,7 @@ import VueRx from 'vue-rx'
 import App from './App'
 import router from './router'
 import '@/styles/main.scss'
+import './filter'
 Vue.config.productionTip = false
 
 Vue.use(VueRx, Rxjs)

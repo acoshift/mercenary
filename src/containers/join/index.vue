@@ -35,7 +35,7 @@
                     <div class="_flex-span lunar-segment">
                       <h4>{{j.name}}</h4>
                       <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
+                      <div><strong>Skill</strong> {{j.skill | skillDetail}}</div>
                     </div>
                   </div>
                 </div>
