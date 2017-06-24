@@ -36,42 +36,14 @@
                 </div>
               </div>
               <div class="lunar-block"><h3>Your Team</h3></div>
-              <div class="slot-list lunar-block-big row">
+              <div class="slot-list lunar-block-big row" v-if="room">
 
-                <div class="col-xs-4">
-                  <div class="job _flex-column lunar-block _no-select _cross-center">
-                    <img src="~@/assets/job/knight.png" alt="knight" width="150px" height="150px">
-                    <div>สมชาย</div>
-                  </div>
-                </div>
-
-                <div class="col-xs-4">
-                  <div class="job _flex-column lunar-block _no-select _cross-center">
-                    <img src="~@/assets/job/knight.png" alt="knight" width="150px" height="150px">
-                    <div>สมหญิง</div>
-                  </div>
-                </div>
-
-                <div class="col-xs-4">
-                  <div class="_flex-column lunar-block _no-select _cross-center">
-                    <div class="empty-slot _flex-row _main-center _cross-center">
-                      <h4>Waiting</h4>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-4">
-                  <div class="_flex-column lunar-block _no-select _cross-center">
-                    <div class="empty-slot _flex-row _main-center _cross-center">
-                      <h4>Waiting</h4>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-4">
-                  <div class="_flex-column lunar-block _no-select _cross-center">
-                    <div class="empty-slot _flex-row _main-center _cross-center">
-                      <h4>Waiting</h4>
+                <div v-for="m in room.member" class="col-xs-4">
+                  <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _cross-center">
+                    <img v-if="m" :src="m.job.photo" alt="knight" width="150px" height="150px">
+                    <div :class="{ 'empty-slot _flex-row _main-center _cross-center': !m }">
+                      <span v-if="m">{{m.name}}</span>
+                      <h4 v-else>Waiting</h4>
                     </div>
                   </div>
                 </div>
@@ -90,8 +62,9 @@
 </template>
 
 <script>
-import { Room, User, Boss, SFX } from '@/services'
+import { Room, User, Boss, Job, SFX } from '@/services'
 import { Observable } from 'rxjs'
+import firebase from 'firebase'
 
 export default {
   name: 'Lobby',
@@ -106,8 +79,32 @@ export default {
       room: Room.get(this.id)
         .flatMap((r) => Observable.forkJoin(
           User.get(r.host),
-          Boss.get(r.boss)
-        ), (r, [ host, boss ]) => ({ ...r, host, boss }))
+          Boss.get(r.boss),
+          Observable.from(Object.keys(r.member).map((id) => ({ id, job: r.member[id] })))
+            .flatMap((m) =>
+              Observable.forkJoin(
+                User.get(m.id),
+                Job.get(m.job)
+              ),
+              (m, [ u, job ]) => ({ ...m, ...u, job })
+            )
+            .toArray()
+        ), (r, [ host, boss, member ]) => ({ ...r, host, boss, member }))
+        .do((r) => {
+          const m = r.member
+          r.member = [null, null, null, null, null]
+          const me = m.findIndex((x) => x.id === firebase.auth().currentUser.uid)
+          r.member[0] = m[me]
+          m[me] = null
+          let i = 1
+          m.forEach((x) => {
+            if (x) {
+              r.member[i] = x
+              i++
+            }
+          })
+        })
+        .do(console.log)
     }
   },
   methods: {
