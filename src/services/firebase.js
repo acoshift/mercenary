@@ -57,7 +57,13 @@ export const onValue = (path) => Observable
           $key: snapshot.key
         })
       },
-      (err) => { o.error(err) }
+      (err) => {
+        if (err.code === 'PERMISSION_DENIED') {
+          o.complete()
+          return
+        }
+        o.error(err)
+      }
     )
     return () => ref.off('value', cb)
   })
