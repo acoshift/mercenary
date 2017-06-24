@@ -15,3 +15,9 @@ Vue.filter('skillDetail', (sk) => ({
   heal: 'Heal your party randomly from 20 - 40 hp',
   fireball: 'Inflict massive damage to boss and 1 of your party member'
 }[sk] || ''))
+
+Vue.filter('shortName', (name) => {
+  if (!name) return ''
+  const names = name.split(' ')
+  return names.length >= 2 ? names[0].substring(0, 1) + '. ' + names[1] : names[0]
+})

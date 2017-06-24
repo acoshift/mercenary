@@ -9,16 +9,6 @@ Vue.config.productionTip = false
 
 Vue.use(VueRx, Rxjs)
 
-Vue.mixin({
-  methods: {
-    shortName: (name) => {
-      if (!name) return ''
-      const names = name.split(' ')
-      return names.length >= 2 ? names[0].substring(0, 1) + '. ' + names[1] : names[0]
-    }
-  }
-})
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

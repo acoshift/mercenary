@@ -11,7 +11,7 @@
             @click="leave">
              Leave
           </div>
-          <div class="_font-size-big"><strong>Lobby <span v-if="room && room.host">{{shortName(room.host.name)}}</span></strong></div>
+          <div class="_font-size-big"><strong>Lobby <span v-if="room && room.host">{{room.host.name | shortName}}</span></strong></div>
          <div
             class="_full-height _flex-row _main-center _cross-center"
             style="width: 50px; cursor: pointer">
@@ -42,7 +42,7 @@
                   <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _cross-center">
                     <img v-if="m" :src="`/static/job/${m.job.photo}`" alt="knight" width="150px" height="150px">
                     <div :class="{ 'empty-slot _flex-row _main-center _cross-center': !m }">
-                      <span v-if="m">{{m.name}}</span>
+                      <span v-if="m">{{m.name | shortName}}</span>
                       <h4 v-else>Waiting</h4>
                     </div>
                   </div>
