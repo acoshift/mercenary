@@ -5,6 +5,7 @@
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
           <div class="_font-size-big" @click="back">Back</div>
+          <div class="_font-size-big">Select Class</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
           </router-link>
