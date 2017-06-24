@@ -9,7 +9,7 @@ import Create from '@/containers/create'
 import Join from '@/containers/join'
 
 import { Observable } from 'rxjs'
-import { Auth, User, Room } from '@/services'
+import { Auth, User, Room, Loader } from '@/services'
 
 Vue.use(Router)
 
@@ -67,6 +67,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  Loader.stop()
   Auth.currentUser
     .first()
     .flatMap((user) =>

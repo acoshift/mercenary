@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="battle-screen" class="">
     <audio src="https://storage.googleapis.com/mercenary-714ba.appspot.com/bgm/bossB64.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
@@ -118,6 +118,9 @@ export default {
         boss.className += ' attacking'
       }, 160)
       setTimeout(() => {
+        this.playShakeScreen()
+      }, 300)
+      setTimeout(() => {
         boss.classList.remove('attacking')
         boss.className += ' move'
       }, 1300)
@@ -141,6 +144,16 @@ export default {
       setTimeout(() => {
         boss.className += ' stunned'
       }, 160)
+    },
+    playShakeScreen () {
+      let screen = document.getElementById('battle-screen')
+      screen.classList.remove('shake')
+      setTimeout(() => {
+        screen.className += ' shake'
+      }, 160)
+      setTimeout(() => {
+        screen.classList.remove('shake')
+      }, 700)
     },
     resetAnimateClass () {
       let boss = document.getElementById('boss')
@@ -227,7 +240,6 @@ export default {
     }
   }
 }
-
 #boss {
   position: relative;
   >img {
@@ -265,6 +277,15 @@ export default {
   }
 }
 
+#battle-screen {
+  &.shake {
+    animation-name: shakeScreen;
+    animation-duration: 0.8s;
+    transform-origin:50% 50%;
+    animation-iteration-count: .6s;
+    animation-timing-function: linear;
+  }
+}
 @keyframes bossAttack {
   0% {top: 0}
   20% {top: -30px}
@@ -287,5 +308,19 @@ export default {
   35% {transform: rotate(7deg)}
   65% {transform: rotate(0deg)}
   100% {transform: rotate(-7deg)}
+}
+
+@keyframes shakeScreen {
+  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+  10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }
+  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+  40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+  50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+  70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+  80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+  100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
 }
 </style>

@@ -106,10 +106,8 @@ export default {
     },
     startGame () {
       Loader.start()
-      return
-      // SFX.playClick()
-      // this.loading = true
-      // Room.start()
+      SFX.playClick()
+      Room.start()
     }
   }
 }

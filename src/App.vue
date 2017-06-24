@@ -29,7 +29,7 @@ export default {
   background-color: rgba(0,0,0,0.7);
   display: none !important;
   &.show {
-    display: block;
+    display: flex !important;
   }
 }
 .loader {
