@@ -45,6 +45,7 @@
         "status": {},
         "member": {
           "$user_id": {
+            ".write": "$user_id === auth.uid && !data.exists()",
             ".validate": "$user_id === auth.uid && root.child('job/' + newData.val()).exists()"
           }
         },

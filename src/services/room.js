@@ -71,6 +71,10 @@ export const getBattleRoom = () => User
   .flatMap((roomId) => Firebase.onValue(`room/${roomId}`))
   .filter(Boolean)
 
+export const join = (roomId, jobId) => Firebase
+  .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
+  .flatMap(() => User.setCurrentRoom(roomId))
+
 export const start = (roomId) => ev
   .push({
     a: 'start',

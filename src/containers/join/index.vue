@@ -83,13 +83,18 @@ export default {
   },
   data () {
     return {
-      selectedJob: 0
+      selectedJob: ''
     }
   },
   methods: {
     join () {
       SFX.playClick()
-      this.$router.push('/lobby')
+      Room.join(this.id, this.selectedJob)
+        .subscribe(
+          () => {
+            this.$router.push('/lobby')
+          }
+        )
     },
     back () {
       SFX.playClick()
