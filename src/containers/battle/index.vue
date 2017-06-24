@@ -9,7 +9,7 @@
               <div class="bar" :style="{width: `${bossHpPercent}%`}"></div>
             </div>
 
-            <div class="boss-avatar _align-center">
+            <div id="boss" class="boss-avatar move">
               <img src="~@/assets/enemy/enemy3-s.png" alt="boss" width="60%">
             </div>
 
@@ -21,7 +21,7 @@
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>สมชาย</strong></div>
                     <div class="member-hp">
-                       <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
+                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
                     </div>
                   </div>
                 </div>
@@ -31,7 +31,7 @@
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>สมชาย</strong></div>
                     <div class="member-hp">
-                       <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
+                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
                     </div>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>สมชาย</strong></div>
                     <div class="member-hp">
-                       <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
+                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>สมชาย</strong></div>
                     <div class="member-hp">
-                       <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
+                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,8 @@
                    <div class="skill">
                     <img
                       src="~@/assets/skill/fireball.png" alt="attack" width="100%"
-                      :class="{disabled: true}">
+                      :class="{disabled: true}"
+                      @click="testBossAttack3">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 3</h4>
                     </div>
@@ -71,15 +72,18 @@
                 <div class="col-xs-4">
                   <div class="skill">
                     <img src="~@/assets/skill/defend.png" alt="attack" width="100%"
-                    :class="{disabled: false}">
+                    :class="{disabled: false}"
+                     @click="testBossAttack2">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-4">
-                   <div class="skill">
-                    <img src="~@/assets/skill/attack.png" alt="attack" width="100%">
+                  <div class="skill">
+                    <img
+                      src="~@/assets/skill/attack.png" alt="attack" width="100%"
+                      @click="testBossAttack">
                   </div>
                 </div>
               </div>
@@ -99,6 +103,46 @@
 <script>
 export default {
   name: 'Battle',
+  methods: {
+    testBossAttack () {
+      let boss = document.getElementById('boss')
+      boss.classList.remove('attacked')
+      boss.classList.remove('attacking')
+      boss.classList.remove('stunned')
+      boss.classList.remove('move')
+      setTimeout(() => {
+        boss.className += ' attacking'
+      }, 160)
+      setTimeout(() => {
+        boss.classList.remove('attacking')
+        boss.className += ' move'
+      }, 1300)
+    },
+    testBossAttack2 () {
+      let boss = document.getElementById('boss')
+      boss.classList.remove('attacked')
+      boss.classList.remove('attacking')
+      boss.classList.remove('stunned')
+      boss.classList.remove('move')
+      setTimeout(() => {
+        boss.className += ' attacked'
+      }, 160)
+      setTimeout(() => {
+        boss.classList.remove('attacked')
+        boss.className += ' move'
+      }, 1300)
+    },
+    testBossAttack3 () {
+      let boss = document.getElementById('boss')
+      boss.classList.remove('attacked')
+      boss.classList.remove('attacking')
+      boss.classList.remove('stunned')
+      boss.classList.remove('move')
+      setTimeout(() => {
+        boss.className += ' stunned'
+      }, 160)
+    }
+  },
   computed: {
     bossHpPercent () {
       return 75
@@ -168,5 +212,65 @@ export default {
       opacity: 0.5;
     }
   }
+}
+
+#boss {
+  position: relative;
+  >img {
+    margin: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+  &.move {
+    img {
+      animation-name: bossMove;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+    }
+  }
+  &.attacking {
+    img {
+      animation-name: bossAttack;
+      animation-duration: .6s;
+    }
+  }
+  &.attacked {
+    img {
+      animation-name: bossBlink;
+      animation-duration: .2s;
+      animation-iteration-count: 4;
+    }
+  }
+  &.stunned {
+    img {
+      animation-name: bossStunned;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+    }
+  }
+}
+
+@keyframes bossAttack {
+  0% {top: 0}
+  20% {top: -30px}
+  80% {top: 100px}
+  100% {top: 0px}
+}
+
+@keyframes bossBlink {
+  to {opacity: 0}
+}
+
+@keyframes bossMove {
+  0% {top: 0px}
+  50% {top: -20px}
+  100% {top: 0px}
+}
+
+@keyframes bossStunned {
+  0% {top: 0px}
+  50% {top: -20px}
+  100% {top: 0px}
 }
 </style>
