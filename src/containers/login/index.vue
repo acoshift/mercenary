@@ -5,22 +5,24 @@
         <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
         <div class="_full-width">
           <div class="col-xs-12">
-            <button class="lunar-button _bg-color-accent _full-width" @click="login">Login</button>
+            <button class="lunar-button2 _bg-color-accent _full-width" @click="login">
+              <h3 class="_no-margin">Login</h3>
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <!--<audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>-->
   </div>
 </template>
 
 <script>
-import { Auth } from '@/services'
-
+import { Auth, SFX } from '@/services'
 export default {
   name: 'Login',
   methods: {
     login () {
+      SFX.playClick()
       Auth.login()
     }
   }

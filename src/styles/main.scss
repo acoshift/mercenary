@@ -12,15 +12,12 @@
 @import 'lunar-shape';
 @import 'lunar-switch';
 
-// Override Pace
-.pace .pace-progress {
-  background: $color-sub !important;
-}
 
 body, html {
   color: $color-dark;
   -webkit-font-smoothing: antialiased;
   height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 

@@ -25,8 +25,12 @@
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
   </head>
-  <body>
-    <div id="app">This is your fallback content in case JavaScript fails to load.</div>
+  <body style="background-color: black;">
+    <div id="app" style="background-color: black">
+      <div style="color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; font-size:2em">
+        Loading...
+      </div>
+    </div>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->

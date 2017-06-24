@@ -46,7 +46,7 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|mp3|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,

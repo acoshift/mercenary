@@ -41,6 +41,37 @@
   }
 }
 
+.lunar-button2 {
+  @extend .lunar-button-base;
+  border: 3px solid white;
+  box-shadow: inset 0 -10px 30px rgba(44,44,44,0.2);
+  transition: all .16s ease;
+  backface-visibility: hidden;
+  &:hover {
+    // transform: scale(1.05);
+  }
+  color: #fff;
+  &.-primary {
+    background-color: $color-primary;
+  }
+  &.-positive {
+    background-color: $color-positive;
+  }
+  &.-warning {
+    background-color: $color-warning;
+  }
+  &.-negative {
+    background-color: $color-negative;
+  }
+  &.-info {
+    background-color: $color-info;
+  }
+  &.-disable {
+    background-color: $color-disable;
+    color: white;
+  }
+}
+
 .lunar-button-outline {
   @extend .lunar-button-base;
   box-shadow: 8px 10px 20px 0 rgba(46,61,73,0.15);
