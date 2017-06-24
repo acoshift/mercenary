@@ -4,7 +4,7 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="back">Back</div>
+          <router-link class="_font-size-big" :to="{ name: 'Home' }">Back</router-link>
           <div class="_font-size-big">Join Room</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
@@ -23,7 +23,7 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-6 col-xs-offset-3">
                   <img
-                  src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
+                  :src="room.boss.photo" alt="boss" width="100%"
                   class="enemy">
                 </div>
               </div>
@@ -45,7 +45,7 @@
               </div>
 
               <div class="lunar-button -negative" @click="join">
-                Create Room
+                Join
               </div>
             </div>
           </div>
@@ -70,7 +70,9 @@ export default {
     return {
       bosses: Boss.list(),
       jobs: Job.list(),
-      room: Room.get(this.id).do(console.log)
+      room: Room.get(this.id)
+        .flatMap((r) => Boss.get(r.boss), (r, boss) => ({ ...r, boss }))
+        .do(console.log)
     }
   },
   data () {
@@ -80,9 +82,6 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
-    },
     join () {
       this.$router.push('/lobby')
     }

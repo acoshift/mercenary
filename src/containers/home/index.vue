@@ -17,52 +17,35 @@
 
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
-
-          <div class="col-xs-12" @click="join">
+          <router-link v-for="(r, i) in rooms" :key="i" class="col-xs-12" :to="{ name: 'Join', params: { id: i } }">
             <LobbyCard>
             </LobbyCard>
-          </div>
-
-          <div class="col-xs-12" @click="join">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
-          <div class="col-xs-12" @click="join">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
-          <div class="col-xs-12" @click="join">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
+          </router-link>
         </div>
       </div>
 
       <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center">
-        <h3 class="_no-margin" @click="create">Create Room</h3>
+        <router-link tag="h3" class="_no-margin" :to="{ name: 'Create' }">Create Room</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Auth } from '@/services'
+import { Auth, Room } from '@/services'
 import LobbyCard from './LobbyCard'
+
 export default {
   name: 'Home',
   components: {
     LobbyCard
   },
+  subscriptions () {
+    return {
+      rooms: Room.list()
+    }
+  },
   methods: {
-    create () {
-      this.$router.push('/create')
-    },
-    join () {
-      this.$router.push('/join')
-    },
     logout () {
       Auth.logout()
         .subscribe(() => {

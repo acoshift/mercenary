@@ -4,7 +4,7 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="back">Back</div>
+          <router-link class="_font-size-big" :to="{ name: 'Home' }">Back</router-link>
           <div class="_font-size-big">Setup Room</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
@@ -44,7 +44,7 @@
               </div>
 
               <div class="lunar-button -negative" @click="create">
-                Join Room
+                Create
               </div>
             </div>
           </div>
@@ -72,9 +72,6 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
-    },
     create () {
       if (!this.selectedJob || !this.selectedJob) {
         return
