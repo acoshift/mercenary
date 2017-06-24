@@ -15,7 +15,7 @@
       </div>
 
       <div class="content _flex-span _bg-color-base">
-        <div class="grid-container">
+        <div class="grid-container" style="max-width: 500px">
           <div class="row">
             <div v-for="n in 18" class="col-xs-3" :key="n">
               <img src="~@/assets/item1.png" width="100%">
@@ -54,6 +54,7 @@ $navbar-height: 50px;
 }
 
 .navbar-dummy {
+  min-height: $navbar-height;
   height: $navbar-height;
 }
 
