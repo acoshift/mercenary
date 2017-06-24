@@ -15,4 +15,4 @@ export const get = (id) => Firebase
   .onValue(`room-member/${id}`)
 
 export const list = () => Firebase
-  .onValue('room-member')
+  .onArrayValue('room-member')

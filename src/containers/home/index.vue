@@ -17,9 +17,8 @@
 
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
-          <router-link v-for="(r, i) in rooms" :key="i" class="col-xs-12" :to="{ name: 'Join', params: { id: i } }">
-            <LobbyCard>
-            </LobbyCard>
+          <router-link v-for="r in rooms" :key="r.$key" class="col-xs-12" :to="{ name: 'Join', params: { id: r.$key } }">
+            <LobbyCard :host="r.host" :boss="r.boss" :member="r.memberCount"></LobbyCard>
           </router-link>
         </div>
       </div>
@@ -32,7 +31,8 @@
 </template>
 
 <script>
-import { Auth, Room } from '@/services'
+import { Auth, Room, User, Boss } from '@/services'
+import { Observable } from 'rxjs'
 import LobbyCard from './LobbyCard'
 
 export default {
@@ -43,6 +43,15 @@ export default {
   subscriptions () {
     return {
       rooms: Room.list()
+        .flatMap((list) => Observable
+          .from(list)
+          .flatMap((r) => Observable.forkJoin(
+            User.get(r.host),
+            Boss.get(r.boss)
+          ), (r, [ host, boss ]) => ({ ...r, host, boss }))
+          .map((r) => ({ ...r, memberCount: 1 + [...r.member].length }))
+          .toArray()
+        )
     }
   },
   methods: {
