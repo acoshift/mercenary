@@ -1,10 +1,12 @@
 <template>
   <div class="login">
-    <div class="_flex-column _cross-center">
-      <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
-      <div class="_full-width">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-          <button class="lunar-button _bg-color-accent _full-width" @click="login">Login</button>
+    <div class="grid-container" style="max-width: 500px">
+      <div class="_flex-column _cross-center">
+        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
+        <div class="_full-width">
+          <div class="col-xs-12">
+            <button class="lunar-button _bg-color-accent _full-width" @click="login">Login</button>
+          </div>
         </div>
       </div>
     </div>
