@@ -8,11 +8,14 @@ build:
 deploy: build
 	firebase deploy
 
-deploy-hosting: build
+.PHONY: hosting
+hosting: build
 	firebase deploy --only hosting
 
-deploy-database:
+.PHONY: database
+database:
 	firebase deploy --only database
 
-deploy-functions:
+.PHONY: functions
+functions:
 	firebase deploy --only functions

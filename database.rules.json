@@ -1,7 +1,7 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null",
+    ".write": false,
     "user": {
       "$user_id": {
         ".read": true,
@@ -43,12 +43,12 @@
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "boss": {
         },
-        "send-event": {
-
+        "send": {
+          "$event_id": {
+            ".write": "!data.exists() && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
+          }
         },
-        "receive-event": {
-
-        }
+        "receive": {}
       }
     }
   }
