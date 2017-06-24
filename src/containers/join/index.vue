@@ -1,6 +1,6 @@
 <template>
   <div>
-    Class Select
+    Join
   </div>
 </template>
 

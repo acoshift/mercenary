@@ -5,7 +5,8 @@ import Home from '@/containers/home'
 import Collection from '@/containers/collection'
 import Lobby from '@/containers/lobby'
 import Battle from '@/containers/battle'
-import Classes from '@/containers/classes'
+import Create from '@/containers/create'
+import Join from '@/containers/join'
 
 import { Auth } from '@/services'
 
@@ -38,9 +39,15 @@ const router = new Router({
       meta: { auth: true }
     },
     {
-      path: '/classes',
-      name: 'Classes',
-      component: Classes,
+      path: '/create',
+      name: 'Create',
+      component: Create,
+      meta: { auth: true }
+    },
+    {
+      path: '/join',
+      name: 'Join',
+      component: Join,
       meta: { auth: true }
     },
     {

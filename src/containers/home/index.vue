@@ -56,7 +56,7 @@
       </div>
 
       <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center">
-        <h3 class="_no-margin">Create Room</h3>
+        <h3 class="_no-margin" @click="create">Create Room</h3>
       </div>
     </div>
   </div>
