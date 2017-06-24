@@ -17,8 +17,53 @@
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container" style="max-width: 500px">
           <div class="row">
-            <div v-for="n in 18" class="col-xs-3" :key="n">
-              <img src="~@/assets/item1.png" width="100%" class="item" :class="{got: (n > 10 && n < 15)}">
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i1.png" width="100%" class="item" :class="{got: true}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i2.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i3.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i4.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i5.png" width="100%" class="item" :class="{got: true}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i6.png" width="100%" class="item" :class="{got: true}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i7.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i8.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i9.png" width="100%" class="item" :class="{got: true}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i10.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i11.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i12.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i13.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i14.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i15.png" width="100%" class="item" :class="{got: false}">
+            </div>
+            <div class="col-xs-3">
+              <img src="~@/assets/items/i16.png" width="100%" class="item" :class="{got: false}">
             </div>
           </div>
         </div>
@@ -62,14 +107,15 @@ $navbar-height: 50px;
   overflow: auto;
   padding-top: 16px;
   background-color: black;
-  background-image: url('~@/assets/bg/bg1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .item {
-  opacity: 0.2;
+  opacity: 0.6;
+  filter: grayscale(100%);
   &.got {
+    filter: grayscale(0%);
     opacity: 1;
   }
 }
