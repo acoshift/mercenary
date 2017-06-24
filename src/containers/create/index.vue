@@ -89,11 +89,9 @@ export default {
       }
 
       Room.create(this.selectedBoss, this.selectedJob)
-        .do(console.log)
         .subscribe(
-          (id) => {
-            console.log(id)
-            // this.$router.push({ name: 'Lobby', params: { id } })
+          () => {
+            this.$router.push({ name: 'Lobby' })
           }
         )
     },
