@@ -18,7 +18,7 @@
         <div class="grid-container" style="max-width: 500px">
           <div class="row">
             <div v-for="n in 18" class="col-xs-3" :key="n">
-              <img src="~@/assets/item1.png" width="100%">
+              <img src="~@/assets/item1.png" width="100%" class="item" :class="{got: (n > 10 && n < 15)}">
             </div>
           </div>
         </div>
@@ -67,4 +67,10 @@ $navbar-height: 50px;
   background-size: cover;
 }
 
+.item {
+  opacity: 0.2;
+  &.got {
+    opacity: 1;
+  }
+}
 </style>
