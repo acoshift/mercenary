@@ -73,11 +73,11 @@ export default {
     return {
       bosses: Boss.list()
         .do((list) => {
-          this.selectedBoss = Object.keys(list)[0]
+          this.selectedBoss = list[0].$key
         }),
       jobs: Job.list()
         .do((list) => {
-          this.selectedJob = Object.keys(list)[0]
+          this.selectedJob = list[0].$key
         })
     }
   },
