@@ -73,6 +73,7 @@ export default {
   methods: {
     create () {
       this.$router.push('/create')
+
     },
     logout () {
     }
