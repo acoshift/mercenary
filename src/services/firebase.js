@@ -31,6 +31,23 @@ export const onValue = (path) => Observable
     return () => ref.off('value', cb)
   })
 
+export const onArrayValue = (path) => Observable
+  .create((o) => {
+    const ref = database.ref(path)
+    const cb = ref.on(
+      'value',
+      (snapshots) => {
+        const r = []
+        snapshots.forEach((snapshot) => {
+          r.push({ ...snapshot.val(), $key: snapshot.key })
+        })
+        o.next(r)
+      },
+      (err) => { o.error(err) }
+    )
+    return () => ref.off('value', cb)
+  })
+
 export const push = (path, data) => Observable
   .fromPromise(database.ref(path).push(data))
 
@@ -41,5 +58,6 @@ export default {
   cache,
   onceValue,
   onValue,
+  onArrayValue,
   push
 }

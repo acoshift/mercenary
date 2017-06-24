@@ -1,14 +1,13 @@
 <template>
   <div class="lunar-card _flex-row">
     <img
-      src="~@/assets/enemy/enemy3-s.png"
+      :src="boss.photo"
       width="100"
-      height="100"
-      class="enemy3">
+      height="100">
 
     <div class="lunar-segment">
-      <div class="lunar-block">Host: สมชาย</div>
-      <div class="lunar-block"></div>
+      <div class="lunar-block">Host: {{host.name}}</div>
+      <div class="lunar-block">Member: {{member}}/5</div>
     </div>
 
   </div>
@@ -16,7 +15,21 @@
 
 <script>
 export default {
-  name: 'LobbyCard'
+  name: 'LobbyCard',
+  props: {
+    host: {
+      type: Object,
+      required: true
+    },
+    boss: {
+      type: Object,
+      required: true
+    },
+    member: {
+      type: Number,
+      required: true
+    }
+  }
 }
 </script>
 
