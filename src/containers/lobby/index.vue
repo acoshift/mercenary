@@ -1,12 +1,21 @@
 <template>
   <div>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="leave">Leave</div>
-          <div class="_font-size-big">Room asasas</div>
-          <div class="_font-size-big">&nbsp</div>
+          <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer"
+            @click="leave">
+             Leave
+          </div>
+          <div class="_font-size-big"><strong>Lobby</strong></div>
+         <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer">
+          </div>
         </div>
       </div>
 
@@ -16,10 +25,10 @@
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
           <div class="lunar-card col-xs-12">
-            <div class="lunar-segment">
+            <div class="lunar-segment" style="padding-left: 0; padding-right: 0">
               <div class="lunar-block"><h3>Room Boss</h3></div>
               <div class="lunar-block-big row">
-                <div class="col-xs-6 col-xs-offset-3">
+                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
                   <img
                   src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
                   class="enemy _no-select">
@@ -68,7 +77,7 @@
 
               </div>
 
-              <div class="lunar-button -negative">
+              <div class="lunar-button2 -negative" @click="startGame">
                 Start Game
               </div>
             </div>
@@ -80,7 +89,7 @@
 </template>
 
 <script>
-import { Room } from '@/services'
+import { Room, SFX } from '@/services'
 
 export default {
   name: 'Lobby',
@@ -92,12 +101,17 @@ export default {
   },
   methods: {
     leave () {
+      SFX.playClick()
       Room.leave()
         .subscribe(
           () => {
             this.$router.push({ name: 'Home' })
           }
         )
+    },
+    startGame () {
+      SFX.playClick()
+      this.$router.push('/battle')
     }
   }
 }
@@ -121,6 +135,16 @@ $navbar-height: 50px;
 .navbar-dummy {
   min-height: $navbar-height;
   height: $navbar-height;
+}
+
+.lunar-card {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 2px solid white;
+  color: #363636;
 }
 
 .content {
@@ -160,4 +184,5 @@ $navbar-height: 50px;
     margin-left: 16.66666667%;
   }
 }
+
 </style>

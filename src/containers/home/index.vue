@@ -11,14 +11,14 @@
             @click="logout">
             <i class="material-icons">power_settings_new</i>
           </div>
-          <div v-if="currentUser">{{currentUser.name}}</div>
-          <router-link to="/collection" class="_full-height _color-warning">
+          <div v-if="currentUser"><strong>{{currentUser.name}}</strong></div>
+          <div @click="clickCollection" class="_full-height _color-warning">
             <div
               class="_full-height _flex-row _cross-center _main-center"
               style="width: 50px; cursor: pointer">
               <i class="material-icons">stars</i>
             </div>
-          </router-link>
+          </div>
         </div>
       </div>
 
@@ -27,21 +27,21 @@
 
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
-          <router-link v-for="r in rooms" :key="r.$key" class="col-xs-12" :to="{ name: 'Join', params: { id: r.$key } }">
+          <div @click="clickRoom(r)" v-for="r in rooms" :key="r.$key" class="col-xs-12">
             <LobbyCard :host="r.host" :boss="r.boss" :member="r.memberCount"></LobbyCard>
-          </router-link>
+          </div>
         </div>
       </div>
 
       <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center">
-        <router-link tag="h3" class="_no-margin" :to="{ name: 'Create' }">Create Room</router-link>
+        <div @click="clickCreate" tag="h3" class="_no-margin _font-size-bigger"><strong>Create Room</strong></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Auth, Room, User, Boss } from '@/services'
+import { Auth, Room, User, Boss, SFX } from '@/services'
 import { Observable } from 'rxjs'
 import LobbyCard from './LobbyCard'
 
@@ -68,10 +68,23 @@ export default {
   },
   methods: {
     logout () {
+      SFX.playClick()
       Auth.logout()
         .subscribe(() => {
           this.$router.push('/')
         })
+    },
+    clickRoom (r) {
+      SFX.playClick()
+      this.$router.push({ name: 'Join', params: { id: r.$key } })
+    },
+    clickCollection () {
+      SFX.playClick()
+      this.$router.push('/collection')
+    },
+    clickCreate () {
+      SFX.playClick()
+      this.$router.push({ name: 'Create' })
     }
   }
 }

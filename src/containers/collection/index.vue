@@ -1,5 +1,6 @@
 <template>
   <div>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
@@ -81,10 +82,12 @@
 </template>
 
 <script>
+import { SFX } from '@/services'
 export default {
   name: 'Collection',
   methods: {
     back () {
+      SFX.playClick()
       this.$router.push('/home')
     }
   }

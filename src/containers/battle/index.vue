@@ -1,5 +1,6 @@
 <template>
   <div>
+    <audio src="https://storage.googleapis.com/mercenary-714ba.appspot.com/bgm/bossB64.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
       <div class="content _flex-span _bg-color-base _full-height">
@@ -63,7 +64,7 @@
                     <img
                       src="~@/assets/skill/fireball.png" alt="attack" width="100%"
                       :class="{disabled: true}"
-                      @click="testBossStunned">
+                      @click="playBossIsStunned">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 3</h4>
                     </div>
@@ -73,7 +74,7 @@
                   <div class="skill">
                     <img src="~@/assets/skill/defend.png" alt="attack" width="100%"
                     :class="{disabled: false}"
-                     @click="testBossAttacked">
+                     @click="playBossIsAttack">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
                     </div>
@@ -83,7 +84,7 @@
                   <div class="skill">
                     <img
                       src="~@/assets/skill/attack.png" alt="attack" width="100%"
-                      @click="testBossAttack">
+                      @click="playBossAttack">
                   </div>
                 </div>
               </div>
@@ -104,7 +105,7 @@
 export default {
   name: 'Battle',
   methods: {
-    testBossAttack () {
+    playBossAttack () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -118,7 +119,7 @@ export default {
         boss.className += ' move'
       }, 1300)
     },
-    testBossAttacked () {
+    playBossIsAttacked () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
@@ -132,7 +133,7 @@ export default {
         boss.className += ' move'
       }, 1300)
     },
-    testBossStunned () {
+    playBossIsStunned () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')

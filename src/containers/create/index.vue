@@ -1,14 +1,18 @@
 <template>
   <div>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <router-link class="_font-size-big" :to="{ name: 'Home' }">Back</router-link>
-          <div class="_font-size-big">Setup Room</div>
-          <router-link to="/collection" class="_color-accent">
-            <div class="_font-size-big">Collectible</div>
-          </router-link>
+          <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer"
+            @click="back">
+             <i class="material-icons">arrow_back</i>
+          </div>
+          <div class="_font-size-big"><strong>Setup Room</strong></div>
+          <div style="width: 50px;"></div>
         </div>
       </div>
 
@@ -18,7 +22,7 @@
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
           <div class="lunar-card col-xs-12">
-            <div class="lunar-segment">
+            <div class="lunar-segment" style="padding-left: 0; padding-right: 0">
               <div class="lunar-block"><h3>Select Boss</h3></div>
               <div class="lunar-block-big row">
                 <div class="col-xs-4" v-for="(b, i) in bosses" :key="i">
@@ -43,7 +47,7 @@
                 </div>
               </div>
 
-              <div class="lunar-button -negative" @click="create">
+              <div class="lunar-button2 -negative" @click="create">
                 Create
               </div>
             </div>
@@ -55,7 +59,7 @@
 </template>
 
 <script>
-import { Boss, Job, Room } from '@/services'
+import { Boss, Job, Room, SFX } from '@/services'
 
 export default {
   name: 'Create',
@@ -79,6 +83,7 @@ export default {
   },
   methods: {
     create () {
+      SFX.playClick()
       if (!this.selectedJob || !this.selectedJob) {
         return
       }
@@ -89,6 +94,18 @@ export default {
             this.$router.push({ name: 'Lobby', params: { id } })
           }
         )
+    },
+    back () {
+      SFX.playClick()
+      this.$router.push('/home')
+    }
+  },
+  watch: {
+    selectedBoss () {
+      SFX.playClick2()
+    },
+    selectedJob () {
+      SFX.playClick2()
     }
   }
 }
@@ -105,13 +122,22 @@ $navbar-height: 50px;
   height: $navbar-height;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
   > div {
-    padding: 0 16px;
   }
 }
 
 .navbar-dummy {
   min-height: $navbar-height;
   height: $navbar-height;
+}
+
+.lunar-card {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 2px solid white;
+  color: #363636;
 }
 
 .content {
@@ -125,16 +151,23 @@ $navbar-height: 50px;
 
 .enemy {
   &.selected {
-    box-shadow: 0px 0px 2px 4px $color-accent;
+    box-shadow: 0px 0px 0px 4px #03A9F4;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
   }
 }
 
 .job {
   &.selected {
-    box-shadow: 0px 0px 2px 4px $color-accent;
+    box-shadow: 0px 0px 0px 4px #03A9F4;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
   }
 }
 .foot-button {
   height: 50px;
+}
+.lunar-button2 {
+  border-color: #e5e5e5;
 }
 </style>
