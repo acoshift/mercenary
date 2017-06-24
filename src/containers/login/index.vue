@@ -29,11 +29,11 @@ export default {
 
 <style lang="scss">
 .login {
-  background-image: url('~@/assets/bg/bg3.jpg');
+  background-image: url('~@/assets/bg/bg2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   @media only screen and (min-width: 970px) {
-    background-image: url('~@/assets/bg/bg3d.jpg');
+    background-image: url('~@/assets/bg/bg2.jpg');
   }
   > div {
     padding-top: 64px;
