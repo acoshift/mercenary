@@ -72,6 +72,7 @@ export default {
     LobbyCard
   },
   methods: {
+<<<<<<< Updated upstream
     logout () {
       Auth.logout()
         .subscribe(
@@ -79,6 +80,10 @@ export default {
             this.$router.push('/')
           }
         )
+=======
+    create () {
+      this.$router.push('/create')
+>>>>>>> Stashed changes
     }
   }
 }
