@@ -11,7 +11,7 @@
             @click="leave">
              Leave
           </div>
-          <div class="_font-size-big"><strong>Lobby <span v-if="room && room.host">{{room.host.name}}</span></strong></div>
+          <div class="_font-size-big"><strong>Lobby <span v-if="room && room.host">{{shortName(room.host.name)}}</span></strong></div>
          <div
             class="_full-height _flex-row _main-center _cross-center"
             style="width: 50px; cursor: pointer">

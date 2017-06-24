@@ -11,7 +11,7 @@
             @click="logout">
             <i class="material-icons">power_settings_new</i>
           </div>
-          <div v-if="currentUser"><strong>{{currentUser.name}}</strong></div>
+          <div v-if="currentUser"><strong>{{shortName(currentUser.name)}}</strong></div>
           <div @click="clickCollection" class="_full-height _color-warning">
             <div
               class="_full-height _flex-row _cross-center _main-center"
