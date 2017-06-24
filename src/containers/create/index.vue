@@ -67,8 +67,14 @@ export default {
   },
   subscriptions () {
     return {
-      bosses: Boss.list(),
+      bosses: Boss.list()
+        .do((list) => {
+          this.selectedBoss = Object.keys(list)[0]
+        }),
       jobs: Job.list()
+        .do((list) => {
+          this.selectedJob = Object.keys(list)[0]
+        })
     }
   },
   methods: {

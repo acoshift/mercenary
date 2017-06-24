@@ -68,8 +68,10 @@ export default {
   },
   subscriptions () {
     return {
-      bosses: Boss.list(),
-      jobs: Job.list(),
+      jobs: Job.list()
+        .do((list) => {
+          this.selectedJob = Object.keys(list)[0]
+        }),
       room: Room.get(this.id)
         .flatMap((r) => Boss.get(r.boss), (r, boss) => ({ ...r, boss }))
         .do(console.log)
@@ -77,7 +79,6 @@ export default {
   },
   data () {
     return {
-      selectedBoss: 0,
       selectedJob: 0
     }
   },
