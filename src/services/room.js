@@ -27,6 +27,7 @@ export const list = () => Firebase
 
 export const leave = () => User
   .getCurrentRoom()
+  .filter(Boolean)
   .flatMap((roomId) => get(roomId).first())
   .flatMap((room) => Observable.forkJoin(
     User.setCurrentRoom(null),

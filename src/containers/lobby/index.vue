@@ -72,9 +72,12 @@ export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom()
-        .do((room) => {
-          if (!room) {
+      room: Room.getMemberRoom(),
+      battleRoom: Room.getBattleRoom()
+        .do(() => { this.$router.push('/battle') }),
+      currentRoom: User.watchCurrentRoom()
+        .do((roomId) => {
+          if (!roomId) {
             User.setCurrentRoom(null)
               .subscribe(
                 () => {
@@ -82,9 +85,7 @@ export default {
                 }
               )
           }
-        }),
-      battleRoom: Room.getBattleRoom()
-        .do(() => { this.$router.push('/battle') })
+        })
     }
   },
   computed: {

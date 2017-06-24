@@ -53,7 +53,7 @@ export default {
   subscriptions () {
     return {
       currentUser: Auth.currentUser
-        .filter((x) => !!x)
+        .filter(Boolean)
         .flatMap((user) => User.get(user.uid)),
       rooms: Room.list()
         .flatMap((list) => Observable

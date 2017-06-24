@@ -10,3 +10,6 @@ export const setCurrentRoom = (roomId) => Firebase
 
 export const getCurrentRoom = () => Firebase
   .onceValue(`user/${firebase.auth().currentUser.uid}/current-room`)
+
+export const watchCurrentRoom = () => Firebase
+  .onValue(`user/${firebase.auth().currentUser.uid}/current-room`)
