@@ -33,8 +33,8 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-12">
                   <div v-for="(j, i) in jobs" :key="i" class="job _flex-row lunar-block" :class="{selected: selectedJob === i}" @click="selectedJob = i">
-                    <img :src="j.photo" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
+                    <img :src="j.photo" alt="knight" width="150px" height="150px" style="min-width: 150px;">
+                    <div class="lunar-segment">
                       <h4>{{j.name}}</h4>
                       <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
                       <div><strong>Skill</strong> {{j.skill | skillDetail}}</div>
@@ -43,8 +43,8 @@
                 </div>
               </div>
 
-              <div class="lunar-button -negative">
-                Create Room
+              <div class="lunar-button -negative" @click="create">
+                Join Room
               </div>
             </div>
           </div>
@@ -74,6 +74,9 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
+    },
+    create () {
+      this.$router.push('/lobby')
     }
   }
 }

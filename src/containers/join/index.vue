@@ -5,7 +5,7 @@
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
           <div class="_font-size-big" @click="back">Back</div>
-          <div class="_font-size-big">Select Class</div>
+          <div class="_font-size-big">Join Room</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
           </router-link>
@@ -21,7 +21,7 @@
             <div class="lunar-segment">
               <div class="lunar-block"><h3>Room Boss</h3></div>
               <div class="lunar-block-big row">
-                <div class="col-xs-4 col-xs-offset-4">
+                <div class="col-xs-6 col-xs-offset-3">
                   <img
                   src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
                   class="enemy">
@@ -31,17 +31,20 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-12">
                   <div v-for="(j, i) in jobs" :key="i" class="job _flex-row lunar-block" :class="{selected: selectedJob === i}" @click="selectedJob = i">
-                    <img :src="j.photo" :alt="j.name" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
+                    <img :src="j.photo" :alt="j.name" width="150px" height="150px" style="min-width: 150px;">
+                    <div class="lunar-segment">
                       <h4>{{j.name}}</h4>
                       <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
-                      <div><strong>Skill</strong> {{j.skill | skillDetail}}</div>
+                      <div><strong>Skill:</strong></div>
+                      <div class="_full-width">
+                        <p>{{j.skill | skillDetail}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="lunar-button -negative">
+              <div class="lunar-button -negative" @click="join">
                 Create Room
               </div>
             </div>
@@ -72,6 +75,9 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
+    },
+    join () {
+      this.$router.push('/lobby')
     }
   }
 }
