@@ -5,7 +5,50 @@
     "user": {
       "$user_id": {
         ".read": true,
-        ".write": "$user_id === auth.uid"
+        "profile": {
+          ".write": "$user_id === auth.uid"
+        },
+        "collection": {}
+      }
+    },
+    "boss": {
+      ".read": true
+    },
+    "job": {
+      ".read": true
+    },
+    "collection": {
+      ".read": true
+    },
+    "room-member": {
+      ".read": true,
+      "$room_id": {
+        "host": {
+          ".write": "!data.exists()"
+        },
+        "boss": {
+          ".write": "!data.exists()"
+        },
+        "status": {
+        },
+        "member": {
+          "$user_id": {
+            ".write": "$user_id === auth.uid"
+          }
+        }
+      }
+    },
+    "room": {
+      "$room_id": {
+        ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        "boss": {
+        },
+        "send-event": {
+
+        },
+        "receive-event": {
+
+        }
       }
     }
   }

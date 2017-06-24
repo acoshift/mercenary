@@ -1,0 +1,53 @@
+{
+  "user": {
+    "123": {
+      "profile": {
+        "name": "Hacker",
+        "photo": "https://...."
+      },
+      "collection": {
+
+      }
+    }
+  },
+  "boss": {
+    "autogen": {
+      "name": "Phoenix",
+      "photo": "https://....",
+      "hp": 1000
+    }
+  },
+  "collection": {
+    "autogen": {
+      "name": "",
+      "photo": ""
+    }
+  },
+  "job": {
+    "autogen": {
+      "name": "",
+      "photo": "",
+      "hp": "",
+      "attack": "",
+      "skill": {
+        "job_id": "",
+        "name": "",
+        "description": "",
+        "event_trigger": "heal"
+      }
+    }
+  },
+  "room": {
+    "autogen": {
+      "boss": {
+        "name": "Phoenix",
+        "photo": "https://....",
+        "hp": 1000
+      },
+      "state": "open, battle"
+    }
+  },
+  "room-member": {
+
+  }
+}
