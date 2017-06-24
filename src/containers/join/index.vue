@@ -30,42 +30,14 @@
               <div class="lunar-block"><h3>Select Your Job</h3></div>
               <div class="lunar-block-big row">
                 <div class="col-xs-12">
-                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 0}" @click="selectedJob = 0">
-                    <img src="~@/assets/job/knight.png" alt="knight" width="150px" height="150px">
+                  <div v-for="(j, i) in jobs" :key="i" class="job _flex-row lunar-block" :class="{selected: selectedJob === i}" @click="selectedJob = i">
+                    <img :src="j.photo" :alt="j.name" width="150px" height="150px">
                     <div class="_flex-span lunar-segment">
-                      <h4>Knight</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <h4>{{j.name}}</h4>
+                      <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
                       <div><strong>Skill</strong> Stun emeny for 1 turn</div>
                     </div>
                   </div>
-
-                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 1}" @click="selectedJob = 1">
-                    <img src="~@/assets/job/mage.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Magician</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
-                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 2}" @click="selectedJob = 2">
-                    <img src="~@/assets/job/assassin.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Assassin</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
-                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 3}" @click="selectedJob = 3">
-                    <img src="~@/assets/job/priest.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Priest</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
 
@@ -81,8 +53,16 @@
 </template>
 
 <script>
+import { Boss, Job } from '@/services'
+
 export default {
   name: 'Join',
+  subscriptions () {
+    return {
+      bosses: Boss.list(),
+      jobs: Job.list()
+    }
+  },
   data () {
     return {
       selectedBoss: 0,
