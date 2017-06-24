@@ -39,6 +39,9 @@
         "host": {
           ".validate": "!data.exists() && newData.val() === auth.uid"
         },
+        "state": {
+          ".write": "data.parent().child('host').val() === auth.uid"
+        },
         "boss": {
           ".validate": "!data.exists() && root.child('boss/' + newData.val()).exists()"
         },
@@ -49,7 +52,8 @@
           }
         },
         ".validate": "newData.hasChildren(['host', 'boss', 'member'])"
-      }
+      },
+      ".indexOn": ["state"]
     },
     "room": {
       "$room_id": {

@@ -22,7 +22,7 @@ export const get = (id) => Firebase
   .onValue(`room-member/${id}`)
 
 export const list = () => Firebase
-  .onArrayValue('room-member')
+  .onArrayValueRef(firebase.database().ref('room-member').orderByChild('state').equalTo(null))
 
 export const leave = () => User
   .getCurrentRoom()
@@ -89,7 +89,8 @@ export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
   .flatMap(() => User.setCurrentRoom(roomId))
 
-export const start = () => getMemberRoom()
+export const start = () => getMemberRoom
+  .flatMap((room) => Firebase.set(`room-member/${room.$key}/state`, 1), (room) => room)
   .flatMap((room) => Firebase.set(`room/${room.$key}`, {
     boss: {
       id: room.boss.$key,
