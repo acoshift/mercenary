@@ -23,6 +23,7 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-6 col-xs-offset-3">
                   <img
+                  v-if="room && room.boss"
                   :src="room.boss.photo" alt="boss" width="100%"
                   class="enemy">
                 </div>
