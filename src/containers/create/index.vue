@@ -61,7 +61,7 @@ export default {
   data () {
     return {
       selectedBoss: 0,
-      selectedJob: '',
+      selectedJob: ''
     }
   },
   methods: {

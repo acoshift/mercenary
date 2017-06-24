@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import
 import LobbyCard from './LobbyCard'
 export default {
   name: 'Home',
@@ -73,7 +72,6 @@ export default {
   methods: {
     create () {
       this.$router.push('/create')
-
     },
     logout () {
     }
