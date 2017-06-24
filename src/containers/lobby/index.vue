@@ -11,7 +11,7 @@
             @click="leave">
              Leave
           </div>
-          <div class="_font-size-big"><strong>Lobby</strong></div>
+          <div class="_font-size-big"><strong>Lobby <span v-if="room && room.host">{{room.host.name}}</span></strong></div>
          <div
             class="_full-height _flex-row _main-center _cross-center"
             style="width: 50px; cursor: pointer">
@@ -30,7 +30,8 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
                   <img
-                  src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
+                  v-if="room && room.boss"
+                  :src="room.boss.photo" alt="boss" width="100%"
                   class="enemy _no-select">
                 </div>
               </div>
@@ -89,7 +90,8 @@
 </template>
 
 <script>
-import { Room, SFX } from '@/services'
+import { Room, User, Boss, SFX } from '@/services'
+import { Observable } from 'rxjs'
 
 export default {
   name: 'Lobby',
@@ -97,6 +99,15 @@ export default {
     id: {
       type: String,
       required: true
+    }
+  },
+  subscriptions () {
+    return {
+      room: Room.get(this.id)
+        .flatMap((r) => Observable.forkJoin(
+          User.get(r.host),
+          Boss.get(r.boss)
+        ), (r, [ host, boss ]) => ({ ...r, host, boss }))
     }
   },
   methods: {

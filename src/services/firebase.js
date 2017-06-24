@@ -32,7 +32,8 @@ export const onceValue = (path) => Observable
   .fromPromise(database.ref(path).once('value'))
   .map((snapshot) => {
     const data = snapshot.val()
-    if (!data) return null
+    if (!data) return data
+    if (typeof data !== 'object') return data
     return {
       ...data,
       $key: snapshot.key
@@ -44,7 +45,18 @@ export const onValue = (path) => Observable
     const ref = database.ref(path)
     const cb = ref.on(
       'value',
-      (snapshot) => { o.next(snapshot.val()) },
+      (snapshot) => {
+        const data = snapshot.val()
+        if (!data) return data
+        if (typeof data !== 'object') {
+          o.next(data)
+          return
+        }
+        o.next({
+          ...data,
+          $key: snapshot.key
+        })
+      },
       (err) => { o.error(err) }
     )
     return () => ref.off('value', cb)
@@ -73,6 +85,9 @@ export const push = (path, data) => Observable
 export const set = (path, data) => Observable
   .fromPromise(database.ref(path).set(data))
 
+export const remove = (path) => Observable
+  .fromPromise(database.ref(path).remove())
+
 export default {
   cache,
   onceValue,
@@ -80,5 +95,6 @@ export default {
   onValue,
   onArrayValue,
   push,
-  set
+  set,
+  remove
 }

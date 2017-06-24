@@ -71,18 +71,19 @@ router.beforeEach((to, from, next) => {
     .first()
     .flatMap((user) =>
       user
-        ? User.getCurrentRoom()
+        ? User.getCurrentRoom().do(console.log)
           .flatMap((id) => id ? Room.get(id) : Observable.of(null))
         : Observable.of(user),
-      (user, room) => ({ ...user, room }))
+      (user, room) => ([ user, room ]))
     .subscribe(
-      (user, room) => {
+      ([ user, room ]) => {
         if (user && (to.name !== 'Lobby' && to.name !== 'Battle') && room) {
           if (room.state === 'battle') {
             next({ name: 'Battle', params: { id: room.$key } })
             return
           }
           next({ name: 'Lobby', params: { id: room.$key } })
+          return
         }
         if (to.meta.auth && !user) {
           next('/')

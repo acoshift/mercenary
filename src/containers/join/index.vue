@@ -79,7 +79,6 @@ export default {
         }),
       room: Room.get(this.id)
         .flatMap((r) => Boss.get(r.boss), (r, boss) => ({ ...r, boss }))
-        .do(console.log)
     }
   },
   data () {
