@@ -27,7 +27,7 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-4" v-for="b in bosses" :key="b.$key">
                   <img
-                  :src="b.photo" alt="boss" width="100%"
+                  :src="`/static/enemy/${b.photo}`" alt="boss" width="100%"
                   class="enemy"
                   :class="{selected: selectedBoss === b.$key}"
                   @click="selectedBoss = b.$key">
@@ -37,7 +37,7 @@
               <div class="lunar-block-big row">
                 <div class="col-xs-12">
                   <div v-for="j in jobs" :key="j.$key" class="job _flex-row lunar-block" :class="{selected: selectedJob === j.$key}" @click="selectedJob = j.$key">
-                    <img :src="j.photo" alt="knight" width="150px" height="150px" style="min-width: 150px;">
+                    <img :src="`/static/job/${j.photo}`" :alt="j.name" width="150px" height="150px" style="min-width: 150px;">
                     <div class="lunar-segment">
                       <h4>{{j.name}}</h4>
                       <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>

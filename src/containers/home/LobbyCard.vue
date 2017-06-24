@@ -1,7 +1,7 @@
 <template>
   <div class="lunar-card _flex-row">
     <img
-      :src="boss.photo"
+      :src="`/static/enemy/${boss.photo}`"
       width="100"
       height="100">
 

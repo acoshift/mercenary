@@ -31,7 +31,7 @@
                 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
                   <img
                   v-if="room && room.boss"
-                  :src="room.boss.photo" alt="boss" width="100%"
+                  :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="100%"
                   class="enemy _no-select">
                 </div>
               </div>
@@ -40,7 +40,7 @@
 
                 <div v-for="m in room.member" class="col-xs-4">
                   <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _cross-center">
-                    <img v-if="m" :src="m.job.photo" alt="knight" width="150px" height="150px">
+                    <img v-if="m" :src="`/static/job/${m.job.photo}`" alt="knight" width="150px" height="150px">
                     <div :class="{ 'empty-slot _flex-row _main-center _cross-center': !m }">
                       <span v-if="m">{{m.name}}</span>
                       <h4 v-else>Waiting</h4>
