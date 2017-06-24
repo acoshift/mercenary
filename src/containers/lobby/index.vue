@@ -4,7 +4,7 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="back">Back</div>
+          <div class="_font-size-big" @click="leave">Leave</div>
           <div class="_font-size-big">Room asasas</div>
           <div class="_font-size-big">&nbsp</div>
         </div>
@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import { Room } from '@/services'
+
 export default {
   name: 'Lobby',
   props: {
@@ -89,8 +91,13 @@ export default {
     }
   },
   methods: {
-    back () {
-      this.$router.go(-1)
+    leave () {
+      Room.leave()
+        .subscribe(
+          () => {
+            this.$router.push({ name: 'Home' })
+          }
+        )
     }
   }
 }

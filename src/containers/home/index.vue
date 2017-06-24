@@ -51,7 +51,7 @@ export default {
             User.get(r.host),
             Boss.get(r.boss)
           ), (r, [ host, boss ]) => ({ ...r, host, boss }))
-          .map((r) => ({ ...r, memberCount: 1 + [...r.member].length }))
+          .map((r) => ({ ...r, memberCount: Object.keys(r.member).length }))
           .toArray()
         )
     }

@@ -18,7 +18,14 @@ export const cache = (path) => {
 
 export const onceValue = (path) => Observable
   .fromPromise(database.ref(path).once('value'))
-  .map((snapshot) => snapshot.val())
+  .map((snapshot) => {
+    const data = snapshot.val()
+    if (!data) return null
+    return {
+      ...data,
+      $key: snapshot.key
+    }
+  })
 
 export const onValue = (path) => Observable
   .create((o) => {
@@ -59,5 +66,6 @@ export default {
   onceValue,
   onValue,
   onArrayValue,
-  push
+  push,
+  set
 }
