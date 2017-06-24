@@ -6,8 +6,8 @@
       height="100">
 
     <div class="lunar-segment">
-      <div class="lunar-block">Host: {{host.name}}</div>
-      <div class="lunar-block">Member: {{member}}/5</div>
+      <div class="lunar-block"><strong>Host:</strong> {{host.name}}</div>
+      <div class="lunar-block"><strong>Member:</strong> {{member}}/5</div>
     </div>
 
   </div>
@@ -36,5 +36,14 @@ export default {
 <style lang='scss' scoped>
 .enemy3 {
   background: #dacab4;
+}
+.lunar-card {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 2px solid white;
+  color: #363636;
 }
 </style>

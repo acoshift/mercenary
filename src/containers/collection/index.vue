@@ -4,9 +4,16 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_flex-row">
-            <div @click="back">Back</div>
-            &nbsp;<div class="_font-size-big">Collection</div>
+          <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer"
+            @click="back">
+             <i class="material-icons">arrow_back</i>
+          </div>
+          <div class="_font-size-big"><strong>Your Collection</strong></div>
+          <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer">
           </div>
         </div>
       </div>
@@ -78,7 +85,7 @@ export default {
   name: 'Collection',
   methods: {
     back () {
-      this.$router.go(-1)
+      this.$router.push('/home')
     }
   }
 }
@@ -94,7 +101,6 @@ $navbar-height: 50px;
   height: $navbar-height;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
   > div {
-    padding: 0 16px;
   }
 }
 
@@ -105,7 +111,8 @@ $navbar-height: 50px;
 
 .content {
   overflow: auto;
-  padding-top: 16px;
+  background-image: url('~@/assets/bg/bg2.jpg');
+  padding-top: 32px;
   background-color: black;
   background-repeat: no-repeat;
   background-size: cover;

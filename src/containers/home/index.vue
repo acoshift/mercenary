@@ -1,13 +1,23 @@
 <template>
   <div>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="logout">Logout</div>
+          <div
+            class="_full-height _flex-row _main-center _cross-center"
+            style="width: 50px; cursor: pointer"
+            @click="logout">
+            <i class="material-icons">power_settings_new</i>
+          </div>
           <div v-if="currentUser">{{currentUser.name}}</div>
-          <router-link to="/collection" class="_color-accent">
-            <div class="_font-size-big">Collectible</div>
+          <router-link to="/collection" class="_full-height _color-warning">
+            <div
+              class="_full-height _flex-row _cross-center _main-center"
+              style="width: 50px; cursor: pointer">
+              <i class="material-icons">stars</i>
+            </div>
           </router-link>
         </div>
       </div>
@@ -77,7 +87,6 @@ $navbar-height: 50px;
   height: $navbar-height;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.03), 0 5px 15px rgba(0, 0, 0, 0.06);
   > div {
-    padding: 0 16px;
   }
 }
 
