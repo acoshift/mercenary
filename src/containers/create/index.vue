@@ -4,7 +4,7 @@
 
       <div class="navbar _bg-color-main">
         <div class="_full-height _flex-row _cross-center _main-space-between">
-          <div class="_font-size-big" @click="back">Home</div>
+          <div class="_font-size-big" @click="back">Back</div>
           <router-link to="/collection" class="_color-accent">
             <div class="_font-size-big">Collectible</div>
           </router-link>
@@ -18,38 +18,94 @@
         <div class="grid-container row" style="max-width: 500px">
           <div class="lunar-card col-xs-12">
             <div class="lunar-segment">
-              <div class="lunar-block">Select Boss</div>
+              <div class="lunar-block"><h3>Select Boss</h3></div>
               <div class="lunar-block-big row">
                 <div class="col-xs-4">
                   <img
                   src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
+                  class="enemy"
                   :class="{selected: selectedBoss === 0}"
                   @click="selectedBoss = 0">
                 </div>
                 <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy2-s.png" alt="boss1" width="100%">
+                  <img src="~@/assets/enemy/enemy2-s.png" alt="boss1" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === 1}"
+                  @click="selectedBoss = 1">
                 </div>
                 <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy3-s.png" alt="boss1" width="100%">
+                  <img src="~@/assets/enemy/enemy3-s.png" alt="boss1" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === 2}"
+                  @click="selectedBoss = 2">
                 </div>
                 <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy4-s.png" alt="boss1" width="100%">
+                  <img src="~@/assets/enemy/enemy4-s.png" alt="boss1" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === 3}"
+                  @click="selectedBoss = 3">
                 </div>
                 <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy5-s.png" alt="boss1" width="100%">
+                  <img src="~@/assets/enemy/enemy5-s.png" alt="boss1" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === 4}"
+                  @click="selectedBoss = 4">
                 </div>
                 <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy6-s.png" alt="boss1" width="100%">
+                  <img src="~@/assets/enemy/enemy6-s.png" alt="boss1" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === 5}"
+                  @click="selectedBoss = 5">
                 </div>
               </div>
-               <div class="lunar-block">Select Your Job</div>
+              <div class="lunar-block"><h3>Select Your Job</h3></div>
+              <div class="lunar-block-big row">
+                <div class="col-xs-12">
+                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 0}" @click="selectedJob = 0">
+                    <img src="~@/assets/job/knight.png" alt="knight" width="150px" height="150px">
+                    <div class="_flex-span lunar-segment">
+                      <h4>Knight</h4>
+                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
+                    </div>
+                  </div>
+
+                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 1}" @click="selectedJob = 1">
+                    <img src="~@/assets/job/mage.png" alt="knight" width="150px" height="150px">
+                    <div class="_flex-span lunar-segment">
+                      <h4>Magician</h4>
+                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
+                    </div>
+                  </div>
+
+                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 2}" @click="selectedJob = 2">
+                    <img src="~@/assets/job/assasin.png" alt="knight" width="150px" height="150px">
+                    <div class="_flex-span lunar-segment">
+                      <h4>Assasin</h4>
+                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
+                    </div>
+                  </div>
+
+                  <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 3}" @click="selectedJob = 3">
+                    <img src="~@/assets/job/priest.png" alt="knight" width="150px" height="150px">
+                    <div class="_flex-span lunar-segment">
+                      <h4>Priest</h4>
+                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="lunar-button -negative">
+                Create Room
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center">
-        <h3 class="_no-margin">Go</h3>
       </div>
     </div>
   </div>
@@ -61,7 +117,7 @@ export default {
   data () {
     return {
       selectedBoss: 0,
-      selectedJob: ''
+      selectedJob: 0
     }
   },
   methods: {
@@ -73,6 +129,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '~@/styles/config.scss';
 $navbar-height: 50px;
 
 .navbar {
@@ -87,6 +144,7 @@ $navbar-height: 50px;
 }
 
 .navbar-dummy {
+  min-height: $navbar-height;
   height: $navbar-height;
 }
 
@@ -99,6 +157,17 @@ $navbar-height: 50px;
   background-size: cover;
 }
 
+.enemy {
+  &.selected {
+    box-shadow: 0px 0px 2px 4px $color-accent;
+  }
+}
+
+.job {
+  &.selected {
+    box-shadow: 0px 0px 2px 4px $color-accent;
+  }
+}
 .foot-button {
   height: 50px;
 }

@@ -18,37 +18,22 @@
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row">
 
-          <div class="col-xs-12">
+          <div class="col-xs-12" @click="join">
             <LobbyCard>
             </LobbyCard>
           </div>
 
-          <div class="col-xs-12">
+          <div class="col-xs-12" @click="join">
             <LobbyCard>
             </LobbyCard>
           </div>
 
-          <div class="col-xs-12">
+          <div class="col-xs-12" @click="join">
             <LobbyCard>
             </LobbyCard>
           </div>
 
-          <div class="col-xs-12">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
-          <div class="col-xs-12">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
-          <div class="col-xs-12">
-            <LobbyCard>
-            </LobbyCard>
-          </div>
-
-          <div class="col-xs-12">
+          <div class="col-xs-12" @click="join">
             <LobbyCard>
             </LobbyCard>
           </div>
@@ -75,6 +60,9 @@ export default {
     create () {
       this.$router.push('/create')
     },
+    join () {
+      this.$router.push('/join')
+    },
     logout () {
       Auth.logout()
         .subscribe(() => {
@@ -100,6 +88,7 @@ $navbar-height: 50px;
 }
 
 .navbar-dummy {
+  min-height: $navbar-height;
   height: $navbar-height;
 }
 

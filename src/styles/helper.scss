@@ -145,9 +145,7 @@
 }
 
 ._flex-span {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1 0 auto;
 }
 
 ._main-strech {
