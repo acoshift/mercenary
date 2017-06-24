@@ -68,8 +68,14 @@ export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom()
-        .do(console.log)
+      room: Room.getMemberRoom(),
+      battleRoom: Room.getBattleRoom()
+        .do(() => { this.$router.push('/battle') })
+    }
+  },
+  data () {
+    return {
+      loading: false
     }
   },
   methods: {
@@ -84,7 +90,8 @@ export default {
     },
     startGame () {
       SFX.playClick()
-      this.$router.push('/battle')
+      this.loading = true
+      Room.start()
     }
   }
 }

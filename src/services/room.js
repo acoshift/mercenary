@@ -4,14 +4,9 @@ import * as User from './user'
 import * as Boss from './boss'
 import * as Job from './job'
 import { Observable } from 'rxjs'
-// import ev from './event'
+import ev from './event'
 
 export const create = (bossId, jobId) => Firebase // ev
-  // .push({
-  //   a: 'create',
-  //   bossId,
-  //   jobId
-  // })
   .push('room-member', {
     host: firebase.auth().currentUser.uid,
     boss: bossId,
@@ -69,4 +64,15 @@ export const getMemberRoom = () => User
         i++
       }
     })
+  })
+
+export const getBattleRoom = () => User
+  .getCurrentRoom()
+  .flatMap((roomId) => Firebase.onValue(`room/${roomId}`))
+  .filter(Boolean)
+
+export const start = (roomId) => ev
+  .push({
+    a: 'start',
+    roomId
   })
