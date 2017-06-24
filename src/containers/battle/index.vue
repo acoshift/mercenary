@@ -52,7 +52,8 @@
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>สมชาย</strong></div>
                     <div class="member-hp">
-                      <div class="bar" :style="{width: `${memberHpPercent}%`}"></div>
+                      <div class="bar" :style="{width: `${memberHpPercent}%`}">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -89,7 +90,10 @@
                 </div>
               </div>
               <div class="player-hp">
-                <div class="bar" :style="{width: `${selfHpPercent}%`}"></div>
+                <div class="bar _align-center _color-light" :style="{width: `${selfHpPercent}%`}"></div>
+                <div class="hp _align-center _color-light">
+                  <strong>150</strong>
+                </div>
               </div>
 
             </div>
@@ -107,12 +111,9 @@ export default {
   name: 'Battle',
   methods: {
     playBossAttack () {
-      SFX.playBossAttack()
       let boss = document.getElementById('boss')
-      boss.classList.remove('attacked')
-      boss.classList.remove('attacking')
-      boss.classList.remove('stunned')
-      boss.classList.remove('move')
+      SFX.playBossAttack()
+      this.resetAnimateClass()
       setTimeout(() => {
         boss.className += ' attacking'
       }, 160)
@@ -122,12 +123,9 @@ export default {
       }, 1300)
     },
     playBossIsAttacked () {
-      SFX.playAttack()
       let boss = document.getElementById('boss')
-      boss.classList.remove('attacked')
-      boss.classList.remove('attacking')
-      boss.classList.remove('stunned')
-      boss.classList.remove('move')
+      SFX.playAttack()
+      this.resetAnimateClass()
       setTimeout(() => {
         boss.className += ' attacked'
       }, 160)
@@ -137,15 +135,19 @@ export default {
       }, 1300)
     },
     playBossIsStunned () {
+      let boss = document.getElementById('boss')
       SFX.playSkillMage()
+      this.resetAnimateClass()
+      setTimeout(() => {
+        boss.className += ' stunned'
+      }, 160)
+    },
+    resetAnimateClass () {
       let boss = document.getElementById('boss')
       boss.classList.remove('attacked')
       boss.classList.remove('attacking')
       boss.classList.remove('stunned')
       boss.classList.remove('move')
-      setTimeout(() => {
-        boss.className += ' stunned'
-      }, 160)
     }
   },
   computed: {
@@ -185,6 +187,7 @@ export default {
 }
 
 .player-hp {
+  position: relative;
   width: 100%;
   background-color: #484848;
   height: 20px;
@@ -193,6 +196,12 @@ export default {
   .bar {
     background-color: #3ad03a;
     height: 100%;
+  }
+  .hp {
+    width: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 2;
   }
 }
 .member {
