@@ -1,11 +1,7 @@
-import firebase from 'firebase'
-import { Observable } from 'rxjs'
+import Firebase from './firebase'
 
-// cache all bosses data
-firebase.database().ref('boss').on('value', () => {})
+Firebase.cache('boss')
 
-export const list = () =>
-  Observable.fromPromise(firebase.database().ref('boss').once('value'))
+export const list = () => Firebase.onceValue('boss')
 
-export const get = (id) =>
-  Observable.fromPromise(firebase.database().ref(`boss/${id}`).once('value'))
+export const get = (id) => Firebase.onceValue(`boss/${id}`)

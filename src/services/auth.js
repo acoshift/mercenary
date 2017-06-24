@@ -1,4 +1,4 @@
-import './init'
+import './firebase'
 import firebase from 'firebase'
 import { Observable, BehaviorSubject } from 'rxjs'
 import axios from 'axios'

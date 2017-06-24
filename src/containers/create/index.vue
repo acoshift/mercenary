@@ -21,83 +21,25 @@
             <div class="lunar-segment">
               <div class="lunar-block"><h3>Select Boss</h3></div>
               <div class="lunar-block-big row">
-                <div class="col-xs-4">
+                <div class="col-xs-4" v-for="(b, i) in bosses" :key="i">
                   <img
-                  src="~@/assets/enemy/enemy1-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 0}"
-                  @click="selectedBoss = 0">
-                </div>
-                <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy2-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 1}"
-                  @click="selectedBoss = 1">
-                </div>
-                <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy3-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 2}"
-                  @click="selectedBoss = 2">
-                </div>
-                <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy4-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 3}"
-                  @click="selectedBoss = 3">
-                </div>
-                <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy5-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 4}"
-                  @click="selectedBoss = 4">
-                </div>
-                <div class="col-xs-4">
-                  <img src="~@/assets/enemy/enemy6-s.png" alt="boss1" width="100%"
-                  class="enemy _no-select"
-                  :class="{selected: selectedBoss === 5}"
-                  @click="selectedBoss = 5">
+                  :src="b.photo" alt="boss" width="100%"
+                  class="enemy"
+                  :class="{selected: selectedBoss === i}"
+                  @click="selectedBoss = i">
                 </div>
               </div>
               <div class="lunar-block"><h3>Select Your Job</h3></div>
               <div class="lunar-block-big row">
                 <div class="col-xs-12">
-                  <div class="job _flex-row lunar-block _no-select" :class="{selected: selectedJob === 0}" @click="selectedJob = 0">
-                    <img src="~@/assets/job/knight.png" alt="knight" width="150px" height="150px">
+                  <div v-for="(j, i) in jobs" :key="i" class="job _flex-row lunar-block" :class="{selected: selectedJob === i}" @click="selectedJob = i">
+                    <img :src="j.photo" alt="knight" width="150px" height="150px">
                     <div class="_flex-span lunar-segment">
-                      <h4>Knight</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
+                      <h4>{{j.name}}</h4>
+                      <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
                       <div><strong>Skill</strong> Stun emeny for 1 turn</div>
                     </div>
                   </div>
-
-                  <div class="job _flex-row lunar-block _no-select" :class="{selected: selectedJob === 1}" @click="selectedJob = 1">
-                    <img src="~@/assets/job/mage.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Magician</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
-                  <div class="job _flex-row lunar-block _no-select" :class="{selected: selectedJob === 2}" @click="selectedJob = 2">
-                    <img src="~@/assets/job/assasin.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Assasin</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
-                  <div class="job _flex-row lunar-block _no-select" :class="{selected: selectedJob === 3}" @click="selectedJob = 3">
-                    <img src="~@/assets/job/priest.png" alt="knight" width="150px" height="150px">
-                    <div class="_flex-span lunar-segment">
-                      <h4>Priest</h4>
-                      <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
-                      <div><strong>Skill</strong> Stun emeny for 1 turn</div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
 
@@ -113,12 +55,20 @@
 </template>
 
 <script>
+import { Boss, Job } from '@/services'
+
 export default {
-  name: 'Home',
+  name: 'Create',
   data () {
     return {
       selectedBoss: 0,
       selectedJob: 0
+    }
+  },
+  subscriptions () {
+    return {
+      bosses: Boss.list(),
+      jobs: Job.list()
     }
   },
   methods: {

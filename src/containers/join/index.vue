@@ -49,9 +49,9 @@
                   </div>
 
                   <div class="job _flex-row lunar-block" :class="{selected: selectedJob === 2}" @click="selectedJob = 2">
-                    <img src="~@/assets/job/assasin.png" alt="knight" width="150px" height="150px">
+                    <img src="~@/assets/job/assassin.png" alt="knight" width="150px" height="150px">
                     <div class="_flex-span lunar-segment">
-                      <h4>Assasin</h4>
+                      <h4>Assassin</h4>
                       <div class="lunar-block"><strong>HP</strong>100 &nbsp; &nbsp;<strong>ATK</strong>10</div>
                       <div><strong>Skill</strong> Stun emeny for 1 turn</div>
                     </div>
