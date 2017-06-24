@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
     .first()
     .flatMap((user) =>
       user
-        ? User.getCurrentRoom()
+        ? User.getCurrentRoom().do(console.log)
           .flatMap((id) => id ? Room.get(id) : Observable.of(null))
         : Observable.of(user),
       (user, room) => ([ user, room ]))
@@ -85,12 +85,16 @@ router.beforeEach((to, from, next) => {
           next({ name: 'Lobby' })
           return
         }
+        if (user && (to.name === 'Lobby' || to.name === 'Battle') && !room) {
+          next({ name: 'Home' })
+          return
+        }
         if (to.meta.auth && !user) {
-          next('/')
+          next({ name: 'Login' })
           return
         }
         if (!to.meta.auth && user) {
-          next('/home')
+          next({ name: 'Home' })
           return
         }
         next()
