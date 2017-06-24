@@ -47,7 +47,10 @@ export const onValue = (path) => Observable
       'value',
       (snapshot) => {
         const data = snapshot.val()
-        if (!data) return data
+        if (!data) {
+          o.next(data)
+          return
+        }
         if (typeof data !== 'object') {
           o.next(data)
           return

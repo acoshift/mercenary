@@ -72,7 +72,14 @@ router.beforeEach((to, from, next) => {
     .flatMap((user) =>
       user
         ? User.getCurrentRoom()
-          .flatMap((id) => id ? Room.get(id) : Observable.of(null))
+          .flatMap((id) => id
+            ? Room.get(id)
+              .do((room) => {
+                if (!room) {
+                  User.setCurrentRoom(null)
+                }
+              })
+            : Observable.of(null))
         : Observable.of(user),
       (user, room) => ([ user, room ]))
     .subscribe(

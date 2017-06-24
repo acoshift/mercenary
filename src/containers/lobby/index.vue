@@ -65,14 +65,24 @@
 </template>
 
 <script>
-import { Room, SFX, Loader } from '@/services'
+import { Room, SFX, Loader, User } from '@/services'
 import firebase from 'firebase'
 
 export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom(),
+      room: Room.getMemberRoom()
+        .do((room) => {
+          if (!room) {
+            User.setCurrentRoom(null)
+              .subscribe(
+                () => {
+                  this.$router.push({ name: 'Home' })
+                }
+              )
+          }
+        }),
       battleRoom: Room.getBattleRoom()
         .do(() => { this.$router.push('/battle') })
     }
