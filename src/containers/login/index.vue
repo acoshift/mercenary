@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="grid-container" style="max-width: 500px">
-      <div class="_flex-column _cross-center">
+      <div class="_flex-column _cross-center _full-width">
         <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
         <div class="_full-width">
           <div class="col-xs-12">
