@@ -99,7 +99,8 @@ export const start = () => getMemberRoom()
       hp: room.boss.hp,
       maxHp: room.boss.hp,
       atk: room.boss.atk,
-      def: room.boss.def
+      def: room.boss.def,
+      ct: room.boss.ct
     },
     member: room.member.map((x) => x ? ({
       id: x.id,
