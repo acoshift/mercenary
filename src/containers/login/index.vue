@@ -2,7 +2,7 @@
   <div class="login">
     <div class="grid-container" style="max-width: 500px">
       <div class="_flex-column _cross-center _full-width">
-        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 250px;" alt="logo">
+        <img class="lunar-block-bigger" src="~@/assets/logo.webp" width="100%" style="max-width: 250px;" alt="logo">
         <div class="_full-width">
           <div class="col-xs-12">
             <button class="lunar-button2 _bg-color-accent _full-width" @click="login">
@@ -39,11 +39,11 @@ export default {
 
 <style lang="scss">
 .login {
-  background-image: url('~@/assets/bg/bg2.jpg');
+  background-image: url('~@/assets/bg/bg2.webp');
   background-repeat: no-repeat;
   background-size: cover;
   @media only screen and (min-width: 970px) {
-    background-image: url('~@/assets/bg/bg2.jpg');
+    background-image: url('~@/assets/bg/bg2.webp');
   }
   > div {
     padding-top: 64px;
