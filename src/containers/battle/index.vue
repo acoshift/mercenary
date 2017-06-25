@@ -36,7 +36,7 @@
                       :class="{disabled: true}"
                       @click="playBossIsStunned">
                     <div class="cooltime _align-center">
-                      <h4 class="no-margin" style="color: white">CT: 3</h4>
+                      <h4 class="no-margin" style="color: white">CT: {{me.skillCt}}</h4>
                     </div>
                   </div>
                 </div>
