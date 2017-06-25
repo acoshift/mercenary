@@ -249,3 +249,15 @@ footer>div:last-child {
     transform: scale(1.1)
   }
 }
+
+._pointer {
+  cursor: pointer;
+}
+
+._no-drag {
+  -webkit-user-drag: none;
+}
+
+._no-select {
+  -webkit-user-select: none;
+}

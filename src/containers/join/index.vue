@@ -33,7 +33,7 @@
                 </div>
               </div>
               <div class="lunar-block"><h3>Select Your Job</h3></div>
-              <div class="lunar-block-big row">
+              <div class="lunar-block-big row _no-drag _no_select _pointer">
                 <div class="col-xs-12">
                   <div v-for="j in jobs" :key="j.$key" class="job _flex-row lunar-block" :class="{selected: selectedJob === j.$key}" @click="selectedJob = j.$key">
                     <img :src="`/static/job/${j.photo}`" :alt="j.name" width="150px" height="150px" style="min-width: 150px;">
