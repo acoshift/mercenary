@@ -72,7 +72,7 @@ export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom().do(console.log),
+      room: Room.getMemberRoom(),
       battleRoom: Room.getBattleRoom()
         .do(() => { this.$router.push('/battle') }),
       currentRoom: User.watchCurrentRoom()
