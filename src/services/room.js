@@ -73,11 +73,12 @@ export const getBattleRoom = () => User
   .do((r) => {
     const m = r.member
     r.member = [null, null, null, null, null]
-    const me = m.findIndex((x) => x.id === firebase.auth().currentUser.uid)
+    const me = firebase.auth().currentUser.uid
     r.member[0] = m[me]
     m[me] = null
     let i = 1
-    m.forEach((x) => {
+    Object.keys(m).forEach((k) => {
+      let x = m[k]
       if (x) {
         r.member[i] = x
         i++
@@ -102,17 +103,20 @@ export const start = () => getMemberRoom()
       def: room.boss.def,
       ct: room.boss.ct
     },
-    member: room.member.map((x) => x ? ({
-      id: x.id,
-      name: x.name,
-      photo: x.photo,
-      hp: x.job.hp,
-      maxHp: x.job.hp,
-      jobPhoto: x.job.photo,
-      atk: x.job.atk,
-      def: x.job.def,
-      skill: x.job.skill,
-      skillCt: x.job.skillCt,
-      skillAtk: x.job.skillAtk
-    }) : null)
+    member: room.member.reduce((p, x) => x ? ({
+      ...p,
+      [x.id]: {
+        id: x.id,
+        name: x.name,
+        photo: x.photo,
+        hp: x.job.hp,
+        maxHp: x.job.hp,
+        jobPhoto: x.job.photo,
+        atk: x.job.atk,
+        def: x.job.def,
+        skill: x.job.skill,
+        skillCt: x.job.skillCt,
+        skillAtk: x.job.skillAtk
+      }
+    }) : p, {})
   }), (room) => room)
