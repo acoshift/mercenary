@@ -9,11 +9,14 @@
             <div class="boss-hp">
               <div class="bar" :style="{width: `${bossHpPercent}%`}"></div>
             </div>
-
             <div id="boss" class="boss-avatar move" v-if="room">
               <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
             </div>
-
+            <div class="exit" >
+              <button class="lunar-button2 _bg-color-accent _full-width">
+                <h3 class="_no-margin">Leave the room</h3>
+              </button>
+            </div>
             <div class="player _flex-column _main-end _flex-span">
               <div class="party lunar-block-big" v-if="room">
 
@@ -326,6 +329,11 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
+.exit {
+  position: relative;
+  top: 38vh;
+}
 
 .content {
   overflow: auto;
