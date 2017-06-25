@@ -140,4 +140,3 @@ export const endBattle = (roomId) => Firebase
 export const leaveBattle = (roomId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, null)
   .flatMap(() => User.setCurrentRoom(null))
-  .flatMap(() => Firebase.set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, null))

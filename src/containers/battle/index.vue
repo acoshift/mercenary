@@ -12,9 +12,9 @@
             <div id="boss" class="boss-avatar move" v-if="room">
               <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
             </div>
-            <div class="exit" >
-              <button class="lunar-button2 _bg-color-accent _full-width">
-                <h3 class="_no-margin">Leave the room</h3>
+            <div class="exit" v-if="gameOver">
+              <button class="lunar-button2 _bg-color-accent _full-width" @click="leave">
+                <h3 class="_no-margin">Leave</h3>
               </button>
             </div>
             <div class="player _flex-column _main-end _flex-span">
@@ -254,22 +254,24 @@ export default {
         case 'fireball':
           const mdmg = this.randRange(this.me.skillAtk, 200)
           SFX.playSkillMage()
-          firebase.database()
-            .ref(`room/${this.room.$key}/boss/hp`)
-            .transaction((hp) => {
-              if (mdmg <= 0) return
-              let rdmg = mdmg <= hp ? mdmg : hp
-              return hp - rdmg
-            })
-            .then(() => {
-              setTimeout(() => {
+          setTimeout(() => {
+            this.playShakeScreen()
+            firebase.database()
+              .ref(`room/${this.room.$key}/boss/hp`)
+              .transaction((hp) => {
+                if (mdmg <= 0) return
+                let rdmg = mdmg <= hp ? mdmg : hp
+                return hp - rdmg
+              })
+              .then(() => {
                 this.bossAttack()
-              }, 3000)
-            })
+              })
+          }, 1600)
           break
       }
     },
     bossAttack () {
+      if (this.gameOver) return
       if (this.bossStuned) {
         this.bossStuned = false
         this.bossTurn = false
@@ -296,7 +298,13 @@ export default {
     },
     leave () {
       if (!this.room) return
-      Room.leaveBattle(this.room.$key).subscribe()
+      SFX.playClick2()
+      Room.leaveBattle(this.room.$key)
+        .subscribe(
+          () => {
+            this.$router.push({ name: 'Home' })
+          }
+        )
     }
   },
   computed: {
@@ -318,7 +326,7 @@ export default {
     },
     disableControl () {
       if (!this.room) return false
-      return this.bossTurn || this.me.hp <= 0 || this.room.boss.hp <= 0
+      return this.bossTurn || this.gameOver
     },
     gameOver () {
       if (!this.room) return false
