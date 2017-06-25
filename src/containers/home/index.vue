@@ -11,14 +11,14 @@
             @click="logout">
             <i class="material-icons">power_settings_new</i>
           </div>
-          <div v-if="currentUser"><strong>{{currentUser.name | shortName}}</strong></div>
-          <div @click="clickCollection" class="_full-height _color-warning">
+          <div v-if="currentUser"><strong>{{currentUser.name | shortName}} &nbsp;</strong></div>
+          <!--<div @click="clickCollection" class="_full-height _color-warning">
             <div
               class="_full-height _flex-row _cross-center _main-center"
               style="width: 50px; cursor: pointer">
               <i class="material-icons">stars</i>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center" @click="clickCreate">
+      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center" @click="clickCreate" >
         <div tag="h3" class="_no-margin _font-size-bigger"><strong>Create Room</strong></div>
       </div>
     </div>
