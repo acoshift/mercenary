@@ -31,7 +31,8 @@ export default {
       Auth.login()
     },
     goHowtoplay () {
-      console.log('go how to play?')
+      SFX.playClick()
+      this.$router.push({ name: 'Tutorial' })
     }
   }
 }

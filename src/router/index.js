@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/containers/login'
+import Tutorial from '@/containers/Tutorial'
 import Home from '@/containers/home'
 import Collection from '@/containers/collection'
 import Lobby from '@/containers/lobby'
@@ -20,6 +21,11 @@ const router = new Router({
       path: '/',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/tutorial',
+      name: 'Tutorial',
+      component: Tutorial
     },
     {
       path: '/home',
