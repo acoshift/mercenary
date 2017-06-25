@@ -106,6 +106,8 @@ export const start = () => getMemberRoom
       photo: x.photo,
       hp: x.job.hp,
       maxHp: x.job.hp,
-      jobPhoto: x.job.photo
+      jobPhoto: x.job.photo,
+      skill: x.job.skill,
+      skillCp: x.jon.skillCp
     }) : null)
   }), (room) => room)
