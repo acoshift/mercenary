@@ -323,8 +323,8 @@ export default {
 <style lang='scss' scoped>
 
 .exit {
-  margin-top: 40vh;
-  z-index: 2;
+  position: relative;
+  top: 38vh;
 }
 
 .content {
