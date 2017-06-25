@@ -1,6 +1,6 @@
 <template>
   <div id="battle-screen" class="">
-    <audio src="https://storage.googleapis.com/mercenary-714ba.appspot.com/bgm/bossB64.mp3" type="audio/mp3" autoplay loop></audio>
+    <audio src="/static/bgm/bossB64.mp3" type="audio/mp3" autoplay loop></audio>
     <div class="_flex-column _full-height">
 
       <div class="content _flex-span _bg-color-base _full-height">
