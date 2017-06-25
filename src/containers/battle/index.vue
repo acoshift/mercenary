@@ -33,7 +33,7 @@
                    <div class="skill">
                     <img
                       :src="`/static/skill/${me.skill}.png`" alt="skill" width="100%"
-                      :class="{disabled: skillCt < me.skillCt || bossTurn}"
+                      :class="{disabled: skillCt < me.skillCt || bossTurn || me.hp <= 0}"
                       @click="skill">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: {{me.skillCt}}</h4>
@@ -44,7 +44,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/def.png" alt="defend" width="100%"
-                      :class="{disabled: defCt < 2 || bossTurn}"
+                      :class="{disabled: defCt < 2 || bossTurn || me.hp <= 0}"
                       @click="defend">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
@@ -55,7 +55,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/atk.png" alt="skill" width="100%"
-                      :class="{disabled: bossTurn}"
+                      :class="{disabled: bossTurn || me.hp <= 0}"
                       @click="attack">
                   </div>
                 </div>
@@ -91,11 +91,13 @@ export default {
         .do(console.log)
         .do((ev) => {
           if (ev.skill === 'stun') {
+            SFX.playSkillKnight()
             this.bossStuned = true
             this.playBossIsStunned()
             return
           }
           if (ev.skill === 'heal' && this.me.hp > 0) {
+            SFX.playSkillPriest()
             firebase.database()
               .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
               .transaction((hp) => {
@@ -214,9 +216,45 @@ export default {
       this.skillCt -= this.me.skillCt
       switch (this.me.skill) {
         case 'stun':
-          SFX.playSkillKnight()
           Room.sendBattleRoomEvent(this.room.$key, { skill: 'stun' })
           setTimeout(() => { this.bossAttack() }, 2000)
+          break
+        case 'heal':
+          const v = this.randRange(this.me.skillAtk, 50)
+          Room.sendBattleRoomEvent(this.room.$key, { skill: 'heal', value: v })
+          break
+        case 'matk':
+          const m = Math.floor(Math.random() * 6) + 1
+          const dmg = m * this.randRange(this.me.skillAtk, 20)
+          this.playSkillAssassin()
+          firebase.database()
+            .ref(`room/${this.room.$key}/boss/hp`)
+            .transaction((hp) => {
+              if (dmg <= 0) return
+              let rdmg = dmg <= hp ? dmg : hp
+              return hp - rdmg
+            })
+            .then(() => {
+              setTimeout(() => {
+                this.bossAttack()
+              }, 1000)
+            })
+          break
+        case 'fireball':
+          const mdmg = this.randRange(this.me.skillAtk, 200)
+          this.playSkillMage()
+          firebase.database()
+            .ref(`room/${this.room.$key}/boss/hp`)
+            .transaction((hp) => {
+              if (mdmg <= 0) return
+              let rdmg = mdmg <= hp ? mdmg : hp
+              return hp - rdmg
+            })
+            .then(() => {
+              setTimeout(() => {
+                this.bossAttack()
+              }, 3000)
+            })
           break
       }
     },
