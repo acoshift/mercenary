@@ -23,7 +23,7 @@
               <div class="party lunar-block-big" v-if="room">
 
                 <div v-for="(m, i) in members" :key="i" v-if="m" class="member _flex-row lunar-block">
-                  <img :src="`/static/skill/${m.skill}.png`" width="30" height="30">
+                  <img :src="`/static/skill/${m.skill}.png`" width="30" height="30" alt="skill">
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>{{m.name}}</strong></div>
                     <div class="member-hp">

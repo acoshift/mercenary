@@ -3,7 +3,8 @@
     <img
       :src="`/static/enemy/${boss.photo}`"
       width="100"
-      height="100">
+      height="100"
+      alt="boss">
 
     <div class="lunar-segment">
       <div class="lunar-block"><strong>Host:</strong> {{host.name}}</div>

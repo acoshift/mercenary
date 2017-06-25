@@ -2,7 +2,7 @@
   <div class="login">
     <div class="grid-container" style="max-width: 500px">
       <div class="_flex-column _cross-center _full-width">
-        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 250px;">
+        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 250px;" alt="logo">
         <div class="_full-width">
           <div class="col-xs-12">
             <button class="lunar-button2 _bg-color-accent _full-width" @click="login">

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/containers/login'
 import Tutorial from '@/containers/Tutorial'
 import Home from '@/containers/home'
-import Collection from '@/containers/collection'
+// import Collection from '@/containers/collection'
 import Lobby from '@/containers/lobby'
 import Battle from '@/containers/battle'
 import Create from '@/containers/create'
@@ -33,12 +33,12 @@ const router = new Router({
       component: Home,
       meta: { auth: true }
     },
-    {
-      path: '/collection',
-      name: 'Collection',
-      component: Collection,
-      meta: { auth: true }
-    },
+    // {
+    //   path: '/collection',
+    //   name: 'Collection',
+    //   component: Collection,
+    //   meta: { auth: true }
+    // },
     {
       path: '/lobby',
       name: 'Lobby',

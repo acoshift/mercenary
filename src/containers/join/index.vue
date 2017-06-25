@@ -79,6 +79,11 @@ export default {
         }),
       room: Room.get(this.id)
         .flatMap((r) => Boss.get(r.boss), (r, boss) => ({ ...r, boss }))
+        .do((room) => {
+          if (room.state) {
+            this.$router.push({ name: 'Home' })
+          }
+        })
     }
   },
   data () {
