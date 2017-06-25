@@ -98,7 +98,8 @@ export const start = () => getMemberRoom()
       photo: room.boss.photo,
       hp: room.boss.hp,
       maxHp: room.boss.hp,
-      atk: room.boss.atk
+      atk: room.boss.atk,
+      def: room.boss.def
     },
     member: room.member.map((x) => x ? ({
       id: x.id,
@@ -110,6 +111,7 @@ export const start = () => getMemberRoom()
       atk: x.job.atk,
       def: x.job.def,
       skill: x.job.skill,
-      skillCt: x.job.skillCt
+      skillCt: x.job.skillCt,
+      skillAtk: x.job.skillAtk
     }) : null)
   }), (room) => room)
