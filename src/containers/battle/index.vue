@@ -173,7 +173,8 @@ export default {
     bossAttack () {
       console.log('boss attack')
       this.playBossAttack()
-      let dmg = this.randRange(this.room.boss.atk, 10) - this.randRange(this.me.def, 30)
+      let dmg = this.randRange(this.room.boss.atk, 20) - this.randRange(this.me.def, 10)
+      console.log(dmg)
       firebase.database()
         .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
         .transaction((hp) => {

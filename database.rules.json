@@ -64,16 +64,18 @@
             ".validate": "root.child('boss/' + newData.val()).exists()"
           },
           "hp": {
-            ".write": "root.child('room-member/' + $room_id + '/host').val() === auth.uid",
+            ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
             ".validate": "newData.val() >= 0"
           }
         },
-        "send": {
-          "$event_id": {
-            ".write": "!data.exists() && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
+        "member": {
+          "$user_id":{
+            "hp":{
+              ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+              ".validate": "newData.val() >= 0"
+            }
           }
-        },
-        "receive": {}
+        }
       }
     }
   }
