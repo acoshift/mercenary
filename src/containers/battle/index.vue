@@ -76,6 +76,7 @@
 
 <script>
 import { SFX, Room } from '@/services'
+import firebase from 'firebase'
 
 export default {
   name: 'Battle',
@@ -139,6 +140,13 @@ export default {
     },
     hpPercent (current, max) {
       return current / max * 100
+    },
+    attack () {
+      firebase.database()
+        .ref(this.room.$key)
+        .transaction((hp) => {
+          return hp - 10
+        })
     }
   },
   computed: {
