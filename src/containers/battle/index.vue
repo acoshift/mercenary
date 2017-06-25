@@ -17,7 +17,7 @@
             <div class="player _flex-column _main-end _flex-span">
               <div class="party lunar-block-big" v-if="room">
 
-                <div v-for="m in members" v-if="m" class="member _flex-row lunar-block">
+                <div v-for="(m, i) in members" :key="i" v-if="m" class="member _flex-row lunar-block">
                   <img src="~@/assets/skill/heal.png" width="30" height="30">
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>{{m.name}}</strong></div>
@@ -28,11 +28,11 @@
                 </div>
 
               </div>
-              <div class="control row lunar-block">
+              <div class="control row lunar-block" v-if="me">
                 <div class="col-xs-4">
                    <div class="skill">
                     <img
-                      src="~@/assets/skill/fireball.png" alt="attack" width="100%"
+                      :src="`/static/skill/${me.skill}.png`" alt="skill" width="100%"
                       :class="{disabled: true}"
                       @click="playBossIsStunned">
                     <div class="cooltime _align-center">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-xs-4">
                   <div class="skill">
-                    <img src="~@/assets/skill/defend.png" alt="attack" width="100%"
+                    <img src="/static/skill/def.png" alt="defend" width="100%"
                     :class="{disabled: false}"
                      @click="playBossIsAttacked">
                     <div class="cooltime _align-center">
@@ -53,7 +53,7 @@
                 <div class="col-xs-4">
                   <div class="skill">
                     <img
-                      src="~@/assets/skill/attack.png" alt="attack" width="100%"
+                      src="/static/skill/atk.png" alt="skill" width="100%"
                       @click="playBossAttack">
                   </div>
                 </div>
@@ -61,7 +61,7 @@
               <div class="player-hp">
                 <div class="bar _align-center _color-light" :style="{width: `${selfHpPercent}%`}"></div>
                 <div class="hp _align-center _color-light">
-                  <strong v-if="room">{{room.member[0].hp}}</strong>
+                  <strong v-if="room">{{me.hp}}</strong>
                 </div>
               </div>
 
@@ -153,6 +153,10 @@ export default {
     members () {
       if (!this.room) return []
       return this.room.member.filter((x, k) => (k !== 0) && !!x)
+    },
+    me () {
+      if (!this.room) return null
+      return this.room.member[0]
     }
   }
 }
