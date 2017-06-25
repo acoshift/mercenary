@@ -54,7 +54,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/atk.png" alt="skill" width="100%"
-                      @click="playBossAttack">
+                      @click="attack">
                   </div>
                 </div>
               </div>
@@ -83,6 +83,12 @@ export default {
   subscriptions () {
     return {
       room: Room.getBattleRoom().do(console.log)
+    }
+  },
+  data () {
+    return {
+      bossTurn: false,
+      isDef: false
     }
   },
   methods: {
@@ -141,11 +147,44 @@ export default {
     hpPercent (current, max) {
       return current / max * 100
     },
+    randRange (current, rangePercent) {
+      const rand = Math.random() * rangePercent
+      return Math.floor(current * (100 + rand) / 100)
+    },
     attack () {
+      if (!this.room) return
+      if (this.bossTurn) return
+      this.bossTurn = true
+      this.playBossIsAttacked()
+      let dmg = this.randRange(this.me.atk, 30) - this.randRange(this.room.boss.def, 10)
       firebase.database()
-        .ref(this.room.$key)
+        .ref(`room/${this.room.$key}/boss/hp`)
         .transaction((hp) => {
-          return hp - 10
+          if (dmg <= 0) return
+          let rdmg = dmg <= hp ? dmg : hp
+          return hp - rdmg
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.bossAttack()
+          }, 1000)
+        })
+    },
+    bossAttack () {
+      console.log('boss attack')
+      this.playBossAttack()
+      let dmg = this.randRange(this.room.boss.atk, 10) - this.randRange(this.me.def, 30)
+      firebase.database()
+        .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
+        .transaction((hp) => {
+          if (dmg <= 0) return
+          let rdmg = dmg <= hp ? dmg : hp
+          return hp - rdmg
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.bossTurn = false
+          }, 1000)
         })
     }
   },

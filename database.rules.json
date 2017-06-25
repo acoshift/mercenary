@@ -62,6 +62,10 @@
         "boss": {
           "id": {
             ".validate": "root.child('boss/' + newData.val()).exists()"
+          },
+          "hp": {
+            ".write": "root.child('room-member/' + $room_id + '/host').val() === auth.uid",
+            ".validate": "newData.val() >= 0"
           }
         },
         "send": {
