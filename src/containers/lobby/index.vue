@@ -38,7 +38,7 @@
               <div class="lunar-block"><h3>Your Team</h3></div>
               <div class="slot-list lunar-block-big row" v-if="room">
 
-                <div v-for="m in room.member" class="col-xs-4">
+                <div v-for="(m, i) in room.member" :key="i" class="col-xs-4">
                   <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _cross-center">
                     <img v-if="m" :src="`/static/job/${m.job.photo}`" alt="knight" width="150px" height="150px">
                     <div :class="{ 'empty-slot _flex-row _main-center _cross-center': !m }">
@@ -72,7 +72,7 @@ export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom().do(console.log),
+      room: Room.getMemberRoom(),
       battleRoom: Room.getBattleRoom()
         .do(() => { this.$router.push('/battle') }),
       currentRoom: User.watchCurrentRoom()

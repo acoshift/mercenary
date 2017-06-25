@@ -17,26 +17,26 @@ admin.initializeApp(functions.config().firebase)
  * 4. add data to /room/{roomId}/receive
  *    { a: 'action_type', u: uid, t: 'time_stamp', d: damange_amt }
  */
-exports.attack = functions.database.ref('/room/{roomId}/send').onWrite(event => {
-  // Grab the current value of what was written to the Realtime Database.
-  const original = event.data.val()
-  console.log('attack', event.params.roomId, original)
+// exports.attack = functions.database.ref('/room/{roomId}/send').onWrite(event => {
+//   // Grab the current value of what was written to the Realtime Database.
+//   const original = event.data.val()
+//   console.log('attack', event.params.roomId, original)
 
-  // Calculate damage
-  const damage = 200
-  return event.data.ref.parent.child('receive').push({
-    a: original.a,
-    t: admin.database.ServerValue.TIMESTAMP,
-    u: original.u,
-    d: damage
-  }).then(() => {
-    return event.data.ref.parent.child('boos/hp').once('value')
-      .then((snapshot) => {
-        let newHp = snapshot.val() - damage
-        return event.data.ref.parent.child('boss/hp').set(newHp)
-      })
-  })
-})
+//   // Calculate damage
+//   const damage = 200
+//   return event.data.ref.parent.child('receive').push({
+//     a: original.a,
+//     t: admin.database.ServerValue.TIMESTAMP,
+//     u: original.u,
+//     d: damage
+//   }).then(() => {
+//     return event.data.ref.parent.child('boos/hp').once('value')
+//       .then((snapshot) => {
+//         let newHp = snapshot.val() - damage
+//         return event.data.ref.parent.child('boss/hp').set(newHp)
+//       })
+//   })
+// })
 
 /**
  * create room

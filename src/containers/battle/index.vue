@@ -10,7 +10,7 @@
               <div class="bar" :style="{width: `${bossHpPercent}%`}"></div>
             </div>
             <div id="boss" class="boss-avatar move" v-if="room">
-              <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
+              <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%" v-show="room.boss.hp > 0">
             </div>
             <div class="exit" v-if="gameOver">
               <button class="lunar-button2 _bg-color-accent _full-width" @click="leave">
@@ -264,6 +264,21 @@ export default {
               .then(() => {
                 this.bossAttack()
               })
+
+            // atk one ppl in party
+            if (this.members.length > 0) {
+              const frand = Math.floor(Math.random() * this.members.length)
+              const fdmg = this.randRange(10, 20)
+              if (fdmg > 0) {
+                firebase.database()
+                  .ref(`room/${this.room.$key}/member/${this.members[frand].id}/hp`)
+                  .transaction((hp) => {
+                    let h = hp - fdmg
+                    if (h < 0) h = 1 // don't die :P
+                    return h
+                  })
+              }
+            }
           }, 1600)
           break
       }
