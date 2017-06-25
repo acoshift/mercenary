@@ -33,7 +33,7 @@
                    <div class="skill">
                     <img
                       :src="`/static/skill/${me.skill}.png`" alt="skill" width="100%"
-                      :class="{disabled: skillCt < me.skillCt || bossTurn || me.hp <= 0}"
+                      :class="{disabled: skillCt < me.skillCt || disableControl}"
                       @click="skill">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: {{me.skillCt}}</h4>
@@ -44,7 +44,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/def.png" alt="defend" width="100%"
-                      :class="{disabled: defCt < 2 || bossTurn || me.hp <= 0}"
+                      :class="{disabled: defCt < 2 || disableControl}"
                       @click="defend">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
@@ -55,7 +55,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/atk.png" alt="skill" width="100%"
-                      :class="{disabled: bossTurn || me.hp <= 0}"
+                      :class="{disabled: disableControl}"
                       @click="attack">
                   </div>
                 </div>
@@ -188,8 +188,7 @@ export default {
       return Math.floor(current * (100 + rand) / 100)
     },
     attack () {
-      if (!this.room) return
-      if (this.bossTurn) return
+      if (this.disableControl) return
       this.bossTurn = true
       this.playBossIsAttacked()
       let dmg = this.randRange(this.me.atk, 30) - this.randRange(this.room.boss.def, 10)
@@ -207,9 +206,8 @@ export default {
         })
     },
     defend () {
-      if (!this.room) return
+      if (this.disableControl) return
       if (this.defCt < 2) return
-      if (this.bossTurn) return
       this.bossTurn = true
       this.defCt -= 2
       this.isDef = true
@@ -219,9 +217,8 @@ export default {
       }, 500)
     },
     skill () {
-      if (!this.room) return
+      if (this.disableControl) return
       if (this.skillCt < 2) return
-      if (this.bossTurn) return
       this.bossTurn = true
       this.skillCt -= this.me.skillCt
       switch (this.me.skill) {
@@ -315,6 +312,14 @@ export default {
     me () {
       if (!this.room) return null
       return this.room.member[0]
+    },
+    disableControl () {
+      if (!this.room) return false
+      return this.bossTurn || this.me.hp <= 0 || this.room.boss.hp <= 0
+    },
+    gameOver () {
+      if (!this.room) return false
+      return this.room.boss.hp <= 0 || this.me.hp <= 0
     }
   }
 }
