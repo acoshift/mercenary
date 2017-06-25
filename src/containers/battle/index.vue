@@ -264,7 +264,9 @@ export default {
                 return hp - rdmg
               })
               .then(() => {
-                this.bossAttack()
+                setTimeout(() => {
+                  this.bossAttack()
+                }, 1000)
               })
 
             // atk one ppl in party
@@ -281,7 +283,7 @@ export default {
                   })
               }
             }
-          }, 1600)
+          }, 1800)
           break
       }
     },

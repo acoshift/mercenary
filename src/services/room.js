@@ -96,9 +96,8 @@ export const sendBattleRoomEvent = (roomId, data) => Firebase
     t: firebase.database.ServerValue.TIMESTAMP
   })
 
-export const join = (roomId, jobId) => Firebase
-  .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
-  .flatMap(() => User.setCurrentRoom(roomId))
+export const join = (roomId, jobId) => User.setCurrentRoom(roomId)
+  .flatMap(() => Firebase.set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId))
 
 export const start = () => getMemberRoom()
   .flatMap((room) => Firebase.set(`room-member/${room.$key}/state`, 1), (room) => room)
