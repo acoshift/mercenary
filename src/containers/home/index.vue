@@ -25,13 +25,13 @@
 
       <div class="navbar-dummy">
       </div>
-      
+
       <div class="content _flex-span _bg-color-base">
         <div class="grid-container row" style="max-width: 500px">
           <div @click="clickRoom(r)" v-for="r in rooms" :key="r.$key" class="col-xs-12">
             <LobbyCard :host="r.host" :boss="r.boss" :member="r.memberCount"></LobbyCard>
           </div>
-          <div v-if="rooms.length === 0" class="col-xs-12 no-room-message">
+          <div v-if="rooms && rooms.length === 0" class="col-xs-12 no-room-message">
             No Room
           </div>
         </div>
