@@ -89,7 +89,6 @@ export default {
     const $room = Room.getBattleRoom()
     return {
       room: $room
-        .do(console.log)
         .do((room) => {
           this.$nextTick(() => {
             if (this.me.hp <= 0 && room.member.filter(Boolean).length <= 1) {
@@ -99,7 +98,6 @@ export default {
         }),
       roomEvent: $room
         .switchMap(() => Room.getBattleRoomEvent())
-        .do(console.log)
         .do((ev) => {
           if (ev.skill === 'stun') {
             SFX.playSkillKnight()
@@ -126,8 +124,8 @@ export default {
     return {
       bossTurn: false,
       isDef: false,
-      defCt: 100,
-      skillCt: 100,
+      defCt: 0,
+      skillCt: 0,
       bossStuned: false
     }
   },
