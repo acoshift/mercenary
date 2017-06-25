@@ -86,6 +86,16 @@ export const getBattleRoom = () => User
     })
   })
 
+export const getBattleRoomEvent = () => User
+  .getCurrentRoom()
+  .flatMap((roomId) => Firebase.onChildAddedRef(firebase.database().ref(`room-event/${roomId}`).orderByChild('t').startAt(Date.now())))
+
+export const sendBattleRoomEvent = (roomId, data) => Firebase
+  .push(`room-event/${roomId}`, {
+    ...data,
+    t: firebase.database.ServerValue.TIMESTAMP
+  })
+
 export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
   .flatMap(() => User.setCurrentRoom(roomId))

@@ -89,6 +89,18 @@ export const onArrayValueRef = (ref) => Observable
 
 export const onArrayValue = (path) => onArrayValueRef(database.ref(path))
 
+export const onChildAddedRef = (ref) => Observable
+  .create((o) => {
+    const cb = ref.on(
+      'child_added',
+      (snapshot) => {
+        o.next(snapshot.val())
+      },
+      (err) => { o.error(err) }
+    )
+    return () => ref.off('child_added', cb)
+  })
+
 export const push = (path, data) => Observable
   .fromPromise(database.ref(path).push(data))
 
@@ -105,6 +117,7 @@ export default {
   onValue,
   onArrayValueRef,
   onArrayValue,
+  onChildAddedRef,
   push,
   set,
   remove

@@ -33,8 +33,8 @@
                    <div class="skill">
                     <img
                       :src="`/static/skill/${me.skill}.png`" alt="skill" width="100%"
-                      :class="{disabled: true}"
-                      @click="playBossIsStunned">
+                      :class="{disabled: skillCt < me.skillCt || bossTurn}"
+                      @click="skill">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: {{me.skillCt}}</h4>
                     </div>
@@ -42,9 +42,10 @@
                 </div>
                 <div class="col-xs-4">
                   <div class="skill">
-                    <img src="/static/skill/def.png" alt="defend" width="100%"
-                    :class="{disabled: false}"
-                     @click="playBossIsAttacked">
+                    <img
+                      src="/static/skill/def.png" alt="defend" width="100%"
+                      :class="{disabled: defCt < 2 || bossTurn}"
+                      @click="defend">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
                     </div>
@@ -54,6 +55,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/atk.png" alt="skill" width="100%"
+                      :class="{disabled: bossTurn}"
                       @click="attack">
                   </div>
                 </div>
@@ -81,14 +83,37 @@ import firebase from 'firebase'
 export default {
   name: 'Battle',
   subscriptions () {
+    const $room = Room.getBattleRoom()
     return {
-      room: Room.getBattleRoom().do(console.log)
+      room: $room.do(console.log),
+      roomEvent: $room
+        .switchMap(() => Room.getBattleRoomEvent())
+        .do(console.log)
+        .do((ev) => {
+          if (ev.skill === 'stun') {
+            this.bossStuned = true
+            this.playBossIsStunned()
+            return
+          }
+          if (ev.skill === 'heal' && this.me.hp > 0) {
+            firebase.database()
+              .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
+              .transaction((hp) => {
+                if (hp <= 0) return
+                return hp + ev.value
+              })
+            return
+          }
+        })
     }
   },
   data () {
     return {
       bossTurn: false,
-      isDef: false
+      isDef: false,
+      defCt: 100,
+      skillCt: 100,
+      bossStuned: false
     }
   },
   methods: {
@@ -121,7 +146,6 @@ export default {
     },
     playBossIsStunned () {
       let boss = document.getElementById('boss')
-      SFX.playSkillMage()
       this.resetAnimateClass()
       setTimeout(() => {
         boss.className += ' stunned'
@@ -170,11 +194,42 @@ export default {
           }, 1000)
         })
     },
+    defend () {
+      if (!this.room) return
+      if (this.defCt < 2) return
+      if (this.bossTurn) return
+      this.bossTurn = true
+      this.defCt -= 2
+      this.isDef = true
+      SFX.playDefend()
+      setTimeout(() => {
+        this.bossAttack()
+      }, 500)
+    },
+    skill () {
+      if (!this.room) return
+      if (this.skillCt < 2) return
+      if (this.bossTurn) return
+      this.bossTurn = true
+      this.skillCt -= this.me.skillCt
+      switch (this.me.skill) {
+        case 'stun':
+          SFX.playSkillKnight()
+          Room.sendBattleRoomEvent(this.room.$key, { skill: 'stun' })
+          setTimeout(() => { this.bossAttack() }, 2000)
+          break
+      }
+    },
     bossAttack () {
-      console.log('boss attack')
+      if (this.bossStuned) {
+        this.bossStuned = false
+        this.bossTurn = false
+        this.resetAnimateClass()
+        return
+      }
       this.playBossAttack()
-      let dmg = this.randRange(this.room.boss.atk, 20) - this.randRange(this.me.def, 10)
-      console.log(dmg)
+      let dmg = this.randRange(this.room.boss.atk, 20) - this.randRange(this.me.def, this.isDef ? 80 : 10)
+      this.isDef = false
       firebase.database()
         .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
         .transaction((hp) => {
@@ -185,6 +240,8 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.bossTurn = false
+            if (this.defCt < 2) this.defCt++
+            if (this.skillCt < this.me.skillCt) this.skillCt++
           }, 1000)
         })
     }

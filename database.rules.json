@@ -77,6 +77,15 @@
           }
         }
       }
+    },
+    "room-event": {
+      "$room_id": {
+        ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        "$event_id": {
+          ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
+        },
+        ".indexOn": ["t"]
+      }
     }
   }
 }
