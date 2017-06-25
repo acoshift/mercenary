@@ -86,10 +86,6 @@ router.beforeEach((to, from, next) => {
     .subscribe(
       ([ user, room ]) => {
         if (user && (to.name !== 'Lobby' && to.name !== 'Battle') && room) {
-          if (room.state === 'battle') {
-            next({ name: 'Battle' })
-            return
-          }
           next({ name: 'Lobby' })
           return
         }

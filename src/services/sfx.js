@@ -1,13 +1,13 @@
-let click = new Audio(require('@/assets/sfx/ui-click.mp3'))
-let click2 = new Audio(require('@/assets/sfx/ui-click2.mp3'))
-let bossAttack = new Audio(require('@/assets/sfx/boss-attack.mp3'))
-let attack = new Audio(require('@/assets/sfx/attack-swing.mp3'))
-let defend = new Audio(require('@/assets/sfx/ui-click2.mp3'))
+let click = new window.Audio(require('@/assets/sfx/ui-click.mp3'))
+let click2 = new window.Audio(require('@/assets/sfx/ui-click2.mp3'))
+let bossAttack = new window.Audio(require('@/assets/sfx/boss-attack.mp3'))
+let attack = new window.Audio(require('@/assets/sfx/attack-swing.mp3'))
+let defend = new window.Audio(require('@/assets/sfx/ui-click2.mp3'))
 
-let skillKnight = new Audio(require('@/assets/sfx/skill_knight.mp3'))
-let skillAssassin = new Audio(require('@/assets/sfx/skill_assassin.mp3'))
-let skillMage = new Audio(require('@/assets/sfx/skill_mage.mp3'))
-let skillPriest = new Audio(require('@/assets/sfx/skill_priest.mp3'))
+let skillKnight = new window.Audio(require('@/assets/sfx/skill_knight.mp3'))
+let skillAssassin = new window.Audio(require('@/assets/sfx/skill_assassin.mp3'))
+let skillMage = new window.Audio(require('@/assets/sfx/skill_mage.mp3'))
+let skillPriest = new window.Audio(require('@/assets/sfx/skill_priest.mp3'))
 
 function playClick () {
   click.play()

@@ -4,7 +4,6 @@ import * as User from './user'
 import * as Boss from './boss'
 import * as Job from './job'
 import { Observable } from 'rxjs'
-import ev from './event'
 
 export const create = (bossId, jobId) => Firebase // ev
   .push('room-member', {
@@ -23,7 +22,7 @@ export const get = (id) => Firebase
   .onValue(`room-member/${id}`)
 
 export const list = () => Firebase
-  .onArrayValue('room-member')
+  .onArrayValueRef(firebase.database().ref('room-member').orderByChild('state').equalTo(null))
 
 export const leave = () => User
   .getCurrentRoom()
@@ -71,13 +70,73 @@ export const getBattleRoom = () => User
   .getCurrentRoom()
   .flatMap((roomId) => Firebase.onValue(`room/${roomId}`))
   .filter(Boolean)
+  .do((r) => {
+    const m = r.member
+    r.member = [null, null, null, null, null]
+    const me = firebase.auth().currentUser.uid
+    r.member[0] = m[me]
+    m[me] = null
+    let i = 1
+    Object.keys(m).forEach((k) => {
+      let x = m[k]
+      if (x) {
+        r.member[i] = x
+        i++
+      }
+    })
+  })
+
+export const getBattleRoomEvent = () => User
+  .getCurrentRoom()
+  .flatMap((roomId) => Firebase.onChildAddedRef(firebase.database().ref(`room-event/${roomId}`).orderByChild('t').startAt(Date.now())))
+
+export const sendBattleRoomEvent = (roomId, data) => Firebase
+  .push(`room-event/${roomId}`, {
+    ...data,
+    t: firebase.database.ServerValue.TIMESTAMP
+  })
 
 export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
   .flatMap(() => User.setCurrentRoom(roomId))
 
-export const start = (roomId) => ev
-  .push({
-    a: 'start',
-    roomId
-  })
+export const start = () => getMemberRoom()
+  .flatMap((room) => Firebase.set(`room-member/${room.$key}/state`, 1), (room) => room)
+  .flatMap((room) => Firebase.set(`room/${room.$key}`, {
+    boss: {
+      id: room.boss.$key,
+      name: room.boss.name,
+      photo: room.boss.photo,
+      hp: room.boss.hp,
+      maxHp: room.boss.hp,
+      atk: room.boss.atk,
+      def: room.boss.def,
+      ct: room.boss.ct
+    },
+    member: room.member.reduce((p, x) => x ? ({
+      ...p,
+      [x.id]: {
+        id: x.id,
+        name: x.name,
+        photo: x.photo,
+        hp: x.job.hp,
+        maxHp: x.job.hp,
+        jobPhoto: x.job.photo,
+        atk: x.job.atk,
+        def: x.job.def,
+        skill: x.job.skill,
+        skillCt: x.job.skillCt,
+        skillAtk: x.job.skillAtk
+      }
+    }) : p, {})
+  }), (room) => room)
+
+export const endBattle = (roomId) => Firebase
+  .set(`room-event/${roomId}`, null)
+  .flatMap(() => Firebase.set(`room/${roomId}`, null))
+  .flatMap(() => User.setCurrentRoom(null))
+  .flatMap(() => Firebase.set(`room-member/${roomId}`, null))
+
+export const leaveBattle = (roomId) => Firebase
+  .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, null)
+  .flatMap(() => User.setCurrentRoom(null))

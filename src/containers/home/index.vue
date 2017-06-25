@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay loop></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
@@ -33,8 +33,8 @@
         </div>
       </div>
 
-      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center">
-        <div @click="clickCreate" tag="h3" class="_no-margin _font-size-bigger"><strong>Create Room</strong></div>
+      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center" @click="clickCreate">
+        <div tag="h3" class="_no-margin _font-size-bigger"><strong>Create Room</strong></div>
       </div>
     </div>
   </div>

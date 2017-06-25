@@ -43,8 +43,7 @@
         "name": "Phoenix",
         "photo": "https://....",
         "hp": 1000
-      },
-      "state": "open, battle"
+      }
     }
   },
   "room-member": {

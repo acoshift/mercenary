@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay loop></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
@@ -39,7 +39,7 @@
                     <img :src="`/static/job/${j.photo}`" :alt="j.name" width="150px" height="150px" style="min-width: 150px;">
                     <div class="lunar-segment">
                       <h4>{{j.name}}</h4>
-                      <div class="lunar-block"><strong>HP</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
+                      <div class="lunar-block"><strong>HP&nbsp;</strong>{{j.hp}} &nbsp; &nbsp;<strong>ATK</strong>{{j.atk}}</div>
                       <div><strong>Skill:</strong></div>
                       <div class="_full-width">
                         <p>{{j.skill | skillDetail}}</p>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay loop></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
@@ -72,7 +72,7 @@ export default {
   name: 'Lobby',
   subscriptions () {
     return {
-      room: Room.getMemberRoom(),
+      room: Room.getMemberRoom().do(console.log),
       battleRoom: Room.getBattleRoom()
         .do(() => { this.$router.push('/battle') }),
       currentRoom: User.watchCurrentRoom()
@@ -107,7 +107,7 @@ export default {
     startGame () {
       Loader.start()
       SFX.playClick()
-      Room.start()
+      Room.start().subscribe()
     }
   }
 }

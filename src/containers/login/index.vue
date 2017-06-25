@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay loop></audio>
   </div>
 </template>
 

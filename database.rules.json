@@ -35,34 +35,56 @@
     "room-member": {
       ".read": true,
       "$room_id": {
-        ".write": "!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)",
+        ".write": "(!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         "host": {
           ".validate": "!data.exists() && newData.val() === auth.uid"
+        },
+        "state": {
+          ".write": "data.parent().child('host').val() === auth.uid"
         },
         "boss": {
           ".validate": "!data.exists() && root.child('boss/' + newData.val()).exists()"
         },
-        "status": {},
         "member": {
           "$user_id": {
-            ".write": "$user_id === auth.uid",
+            ".write": "$user_id === auth.uid && (newData.val() === null || (!root.child('room/' + $room_id).exists() && !data.parent().child('state').exists()))",
             ".validate": "$user_id === auth.uid && (newData.val() === null || root.child('job/' + newData.val()).exists())"
           }
-        },
-        ".validate": "newData.hasChildren(['host', 'boss', 'member'])"
-      }
+        }
+      },
+      ".indexOn": ["state"]
     },
     "room": {
       "$room_id": {
+        ".write": "(!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "boss": {
-        },
-        "send": {
-          "$event_id": {
-            ".write": "!data.exists() && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
+          "id": {
+            ".validate": "root.child('boss/' + newData.val()).exists()"
+          },
+          "hp": {
+            ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+            ".validate": "newData.val() >= 0"
           }
         },
-        "receive": {}
+        "member": {
+          "$user_id":{
+            "hp":{
+              ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+              ".validate": "newData.val() >= 0"
+            }
+          }
+        }
+      }
+    },
+    "room-event": {
+      "$room_id": {
+        ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        ".write": "data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        "$event_id": {
+          ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
+        },
+        ".indexOn": ["t"]
       }
     }
   }

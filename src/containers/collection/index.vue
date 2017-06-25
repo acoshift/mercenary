@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay></audio>
+    <audio src="/static/bgm/login.mp3" type="audio/mp3" autoplay loop></audio>
     <div class="_flex-column _full-height">
 
       <div class="navbar _bg-color-main">
@@ -123,6 +123,7 @@ $navbar-height: 50px;
 
 .item {
   opacity: 0.6;
+  -webkit-user-drag: none;
   filter: grayscale(100%);
   &.got {
     filter: grayscale(0%);
