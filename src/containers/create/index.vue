@@ -19,7 +19,7 @@
       <div class="navbar-dummy">
       </div>
 
-      <div class="content _flex-span _bg-color-base">
+      <div class="content _flex-span _bg-color-base _no-drag _no-select">
         <div class="grid-container row" style="max-width: 500px">
           <div class="lunar-card col-xs-12">
             <div class="lunar-segment" style="padding-left: 0; padding-right: 0">
@@ -28,13 +28,13 @@
                 <div class="col-xs-4" v-for="b in bosses" :key="b.$key">
                   <img
                   :src="`/static/enemy/${b.photo}`" alt="boss" width="100%"
-                  class="enemy"
+                  class="enemy _pointer _no-drag"
                   :class="{selected: selectedBoss === b.$key}"
                   @click="selectedBoss = b.$key">
                 </div>
               </div>
               <div class="lunar-block"><h3>Select Your Job</h3></div>
-              <div class="lunar-block-big row">
+              <div class="lunar-block-big row _pointer">
                 <div class="col-xs-12">
                   <div v-for="j in jobs" :key="j.$key" class="job _flex-row lunar-block" :class="{selected: selectedJob === j.$key}" @click="selectedJob = j.$key">
                     <img :src="`/static/job/${j.photo}`" :alt="j.name" width="150px" height="150px" style="min-width: 150px;">
@@ -150,6 +150,7 @@ $navbar-height: 50px;
 }
 
 .enemy {
+  cursor: pointer;
   &.selected {
     box-shadow: 0px 0px 0px 4px #03A9F4;
     background: rgb(255, 255, 255);

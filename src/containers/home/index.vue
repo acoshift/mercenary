@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center" @click="clickCreate" >
+      <div class="foot-button _bg-color-accent _color-light _flex-row _main-center _cross-center _pointer" @click="clickCreate" >
         <div tag="h3" class="_no-margin _font-size-bigger"><strong>Create Room</strong></div>
       </div>
     </div>

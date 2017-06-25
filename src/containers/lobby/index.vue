@@ -32,14 +32,14 @@
                   <img
                   v-if="room && room.boss"
                   :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="100%"
-                  class="enemy _no-select">
+                  class="enemy _pointer _no-drag">
                 </div>
               </div>
               <div class="lunar-block"><h3>Your Team</h3></div>
               <div class="slot-list lunar-block-big row" v-if="room">
 
                 <div v-for="m in room.member" class="col-xs-4">
-                  <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _cross-center">
+                  <div :class="{ job: !!m }" class="_flex-column lunar-block _no-select _no-drag _cross-center">
                     <img v-if="m" :src="`/static/job/${m.job.photo}`" alt="knight" width="150px" height="150px">
                     <div :class="{ 'empty-slot _flex-row _main-center _cross-center': !m }">
                       <span v-if="m">{{m.name | shortName}}</span>
