@@ -132,10 +132,11 @@ $navbar-height: 50px;
 
 .no-room-message {
   position: relative;
-  color: white;
-  font-size: 1.25em;
+  color: #c5c5c5;
+  font-size: 1em;
   text-align: center;
   background-color: rgba(111, 111, 111, 0.55);
   padding: 20px;
+  border-radius: 10px;
 }
 </style>
