@@ -13,8 +13,8 @@
               <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%" v-show="room.boss.hp > 0">
             </div>
             <div class="exit" v-if="gameOver">
-              <h1 v-if="room.boss.hp === 0" style="color: #fdfdfd; margin-bottom: 30px;">You Win</h1>
-              <h1 v-else style="color: #F44336; margin-bottom: 30px;">You Lost</h1>
+              <h1 v-if="room.boss.hp === 0" style="color: #fdfdfd; margin-bottom: 30px;">YOU WIN</h1>
+              <h1 v-else style="color: #F44336; margin-bottom: 30px;">YOU DIED</h1>
               <button class="lunar-button2 _bg-color-accent _full-width" @click="leave">
                 <h3 class="_no-margin">Leave</h3>
               </button>
