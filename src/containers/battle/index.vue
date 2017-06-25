@@ -9,16 +9,19 @@
             <div class="boss-hp">
               <div class="bar" :style="{width: `${bossHpPercent}%`}"></div>
             </div>
-
             <div id="boss" class="boss-avatar move" v-if="room">
               <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
             </div>
-
+            <div class="exit" v-if="gameOver">
+              <button class="lunar-button2 _bg-color-accent _full-width" @click="leave">
+                <h3 class="_no-margin">Leave</h3>
+              </button>
+            </div>
             <div class="player _flex-column _main-end _flex-span">
               <div class="party lunar-block-big" v-if="room">
 
                 <div v-for="(m, i) in members" :key="i" v-if="m" class="member _flex-row lunar-block">
-                  <img src="~@/assets/skill/heal.png" width="30" height="30">
+                  <img :src="`/static/skill/${m.skill}.png`" width="30" height="30">
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>{{m.name}}</strong></div>
                     <div class="member-hp">
@@ -33,7 +36,7 @@
                    <div class="skill">
                     <img
                       :src="`/static/skill/${me.skill}.png`" alt="skill" width="100%"
-                      :class="{disabled: skillCt < me.skillCt || bossTurn || me.hp <= 0}"
+                      :class="{disabled: skillCt < me.skillCt || disableControl}"
                       @click="skill">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: {{me.skillCt}}</h4>
@@ -44,7 +47,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/def.png" alt="defend" width="100%"
-                      :class="{disabled: defCt < 2 || bossTurn || me.hp <= 0}"
+                      :class="{disabled: defCt < 2 || disableControl}"
                       @click="defend">
                     <div class="cooltime _align-center">
                       <h4 class="no-margin" style="color: white">CT: 2</h4>
@@ -55,7 +58,7 @@
                   <div class="skill">
                     <img
                       src="/static/skill/atk.png" alt="skill" width="100%"
-                      :class="{disabled: bossTurn || me.hp <= 0}"
+                      :class="{disabled: disableControl}"
                       @click="attack">
                   </div>
                 </div>
@@ -85,10 +88,16 @@ export default {
   subscriptions () {
     const $room = Room.getBattleRoom()
     return {
-      room: $room.do(console.log),
+      room: $room
+        .do((room) => {
+          this.$nextTick(() => {
+            if (this.me.hp <= 0 && room.member.filter(Boolean).length <= 1) {
+              Room.endBattle(room.$key).subscribe()
+            }
+          })
+        }),
       roomEvent: $room
         .switchMap(() => Room.getBattleRoomEvent())
-        .do(console.log)
         .do((ev) => {
           if (ev.skill === 'stun') {
             SFX.playSkillKnight()
@@ -102,7 +111,9 @@ export default {
               .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
               .transaction((hp) => {
                 if (hp <= 0) return
-                return hp + ev.value
+                let h = hp + ev.value
+                if (h > this.me.maxHp) h = this.me.maxHp
+                return h
               })
             return
           }
@@ -113,8 +124,8 @@ export default {
     return {
       bossTurn: false,
       isDef: false,
-      defCt: 100,
-      skillCt: 100,
+      defCt: 0,
+      skillCt: 0,
       bossStuned: false
     }
   },
@@ -178,8 +189,7 @@ export default {
       return Math.floor(current * (100 + rand) / 100)
     },
     attack () {
-      if (!this.room) return
-      if (this.bossTurn) return
+      if (this.disableControl) return
       this.bossTurn = true
       this.playBossIsAttacked()
       let dmg = this.randRange(this.me.atk, 30) - this.randRange(this.room.boss.def, 10)
@@ -197,9 +207,8 @@ export default {
         })
     },
     defend () {
-      if (!this.room) return
+      if (this.disableControl) return
       if (this.defCt < 2) return
-      if (this.bossTurn) return
       this.bossTurn = true
       this.defCt -= 2
       this.isDef = true
@@ -209,9 +218,8 @@ export default {
       }, 500)
     },
     skill () {
-      if (!this.room) return
+      if (this.disableControl) return
       if (this.skillCt < 2) return
-      if (this.bossTurn) return
       this.bossTurn = true
       this.skillCt -= this.me.skillCt
       switch (this.me.skill) {
@@ -222,11 +230,12 @@ export default {
         case 'heal':
           const v = this.randRange(this.me.skillAtk, 50)
           Room.sendBattleRoomEvent(this.room.$key, { skill: 'heal', value: v })
+          setTimeout(() => { this.bossAttack() }, 2000)
           break
         case 'matk':
           const m = Math.floor(Math.random() * 6) + 1
           const dmg = m * this.randRange(this.me.skillAtk, 20)
-          this.playSkillAssassin()
+          SFX.playSkillAssassin()
           firebase.database()
             .ref(`room/${this.room.$key}/boss/hp`)
             .transaction((hp) => {
@@ -242,23 +251,25 @@ export default {
           break
         case 'fireball':
           const mdmg = this.randRange(this.me.skillAtk, 200)
-          this.playSkillMage()
-          firebase.database()
-            .ref(`room/${this.room.$key}/boss/hp`)
-            .transaction((hp) => {
-              if (mdmg <= 0) return
-              let rdmg = mdmg <= hp ? mdmg : hp
-              return hp - rdmg
-            })
-            .then(() => {
-              setTimeout(() => {
+          SFX.playSkillMage()
+          setTimeout(() => {
+            this.playShakeScreen()
+            firebase.database()
+              .ref(`room/${this.room.$key}/boss/hp`)
+              .transaction((hp) => {
+                if (mdmg <= 0) return
+                let rdmg = mdmg <= hp ? mdmg : hp
+                return hp - rdmg
+              })
+              .then(() => {
                 this.bossAttack()
-              }, 3000)
-            })
+              })
+          }, 1600)
           break
       }
     },
     bossAttack () {
+      if (this.gameOver) return
       if (this.bossStuned) {
         this.bossStuned = false
         this.bossTurn = false
@@ -282,6 +293,16 @@ export default {
             if (this.skillCt < this.me.skillCt) this.skillCt++
           }, 1000)
         })
+    },
+    leave () {
+      if (!this.room) return
+      SFX.playClick2()
+      Room.leaveBattle(this.room.$key)
+        .subscribe(
+          () => {
+            this.$router.push({ name: 'Home' })
+          }
+        )
     }
   },
   computed: {
@@ -300,12 +321,25 @@ export default {
     me () {
       if (!this.room) return null
       return this.room.member[0]
+    },
+    disableControl () {
+      if (!this.room) return false
+      return this.bossTurn || this.gameOver
+    },
+    gameOver () {
+      if (!this.room) return false
+      return this.room.boss.hp <= 0 || this.me.hp <= 0
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
+
+.exit {
+  position: relative;
+  top: 38vh;
+}
 
 .content {
   overflow: auto;

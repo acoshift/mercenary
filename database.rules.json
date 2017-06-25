@@ -35,7 +35,7 @@
     "room-member": {
       ".read": true,
       "$room_id": {
-        ".write": "!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)",
+        ".write": "(!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         "host": {
           ".validate": "!data.exists() && newData.val() === auth.uid"
         },
@@ -47,17 +47,16 @@
         },
         "member": {
           "$user_id": {
-            ".write": "$user_id === auth.uid && !root.child('room/' + $room_id).exists() && !data.parent().child('state').exists()",
+            ".write": "$user_id === auth.uid && (newData.val() === null || (!root.child('room/' + $room_id).exists() && !data.parent().child('state').exists()))",
             ".validate": "$user_id === auth.uid && (newData.val() === null || root.child('job/' + newData.val()).exists())"
           }
-        },
-        ".validate": "newData.hasChildren(['host', 'boss', 'member'])"
+        }
       },
       ".indexOn": ["state"]
     },
     "room": {
       "$room_id": {
-        ".write": "!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid",
+        ".write": "(!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "boss": {
           "id": {
@@ -81,6 +80,7 @@
     "room-event": {
       "$room_id": {
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        ".write": "data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "$event_id": {
           ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
         },

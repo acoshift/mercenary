@@ -130,3 +130,13 @@ export const start = () => getMemberRoom()
       }
     }) : p, {})
   }), (room) => room)
+
+export const endBattle = (roomId) => Firebase
+  .set(`room-event/${roomId}`, null)
+  .flatMap(() => Firebase.set(`room/${roomId}`, null))
+  .flatMap(() => User.setCurrentRoom(null))
+  .flatMap(() => Firebase.set(`room-member/${roomId}`, null))
+
+export const leaveBattle = (roomId) => Firebase
+  .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, null)
+  .flatMap(() => User.setCurrentRoom(null))
