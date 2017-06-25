@@ -13,7 +13,7 @@
               <img :src="`/static/enemy/${room.boss.photo}`" alt="boss" width="60%">
             </div>
             <div class="exit" >
-              <button class="lunar-button2 _bg-color-accent _full-width" @click="login">
+              <button class="lunar-button2 _bg-color-accent _full-width">
                 <h3 class="_no-margin">Leave the room</h3>
               </button>
             </div>
