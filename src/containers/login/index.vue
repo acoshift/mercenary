@@ -10,7 +10,7 @@
             </button>
           </div>
           <div class="col-xs-12" style="padding-top: 20px;">
-            <button class="lunar-button2 _full-width" @click="goHowtoplay">
+            <button class="lunar-button2 _full-width" @click="howtoplay">
               <h3 class="_no-margin" style="color: #2e363e;">How to play?</h3>
             </button>
           </div>
@@ -30,7 +30,7 @@ export default {
       SFX.playClick()
       Auth.login()
     },
-    goHowtoplay () {
+    howtoplay () {
       SFX.playClick()
       this.$router.push({ name: 'Tutorial' })
     }

@@ -46,7 +46,7 @@
                     <img src="/static/job/knight.png" width="100px" height="100px" style="min-width: 100px;">
                     <div class="lunar-segment">
                       <h4>Knight</h4>
-                      <div><strong>Skill</strong> Stun boss for 1 turn</div>
+                      <div class="detail"><strong>Skill</strong> Stun boss for 1 turn</div>
                     </div>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                     <img src="/static/job/mage.png" width="100px" height="100px" style="min-width: 100px;">
                     <div class="lunar-segment">
                       <h4>Magician</h4>
-                      <div><strong>Skill</strong> Inflict massive damage to boss and 1 of your party member</div>
+                      <div class="detail"><strong>Skill</strong> Inflict massive damage to boss and 1 of your party member</div>
                     </div>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                     <img src="/static/job/assassin.png" width="100px" height="100px" style="min-width: 100px;">
                     <div class="lunar-segment">
                       <h4>Assassin</h4>
-                      <div><strong>Skill</strong> Inflict multiple hits damage randomly from 1 - 6 hits</div>
+                      <div class="detail"><strong>Skill</strong> Inflict multiple hits damage randomly from 1 - 6 hits</div>
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                     <img src="/static/job/priest.png" width="100px" height="100px" style="min-width: 100px;">
                     <div class="lunar-segment">
                       <h4>Priest</h4>
-                      <div><strong>Skill</strong> Heal your party</div>
+                      <div class="detail"><strong>Skill</strong> Heal your party</div>
                     </div>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ $navbar-height: 50px;
 
 .content {
   overflow: auto;
-  background-image: url('~@/assets/bg/bg1.jpg');
+  background-image: url('~@/assets/bg/bg2.jpg');
   padding-top: 32px;
   background-color: black;
   background-repeat: no-repeat;
@@ -143,5 +143,9 @@ $navbar-height: 50px;
   background: rgba(3, 7, 26, 0.54);
   border-radius: 10px;
   box-shadow: 0px 0px 0px 4px #ffffff;
+}
+
+.detail {
+  color: #bbbbbb;
 }
 </style>

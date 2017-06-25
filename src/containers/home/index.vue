@@ -11,7 +11,8 @@
             @click="logout">
             <i class="material-icons">power_settings_new</i>
           </div>
-          <div v-if="currentUser"><strong>{{currentUser.name}} &nbsp;</strong></div>
+          <div v-if="currentUser"><strong>{{currentUser.name | shortName}} &nbsp;</strong></div>
+          <div @click="clickHowtoplay" style="padding: 3px 10px 0 0; cursor: pointer;"><i class="material-icons">info_outline</i></div>
           <!--<div @click="clickCollection" class="_full-height _color-warning">
             <div
               class="_full-height _flex-row _cross-center _main-center"
@@ -86,6 +87,10 @@ export default {
     clickCreate () {
       SFX.playClick()
       this.$router.push({ name: 'Create' })
+    },
+    clickHowtoplay () {
+      SFX.playClick()
+      this.$router.push({ name: 'Tutorial' })
     }
   }
 }

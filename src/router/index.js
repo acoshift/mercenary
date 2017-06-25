@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
           next({ name: 'Login' })
           return
         }
-        if (!to.meta.auth && user) {
+        if (!to.meta.auth && user && to.name !== 'Tutorial') {
           next({ name: 'Home' })
           return
         }
