@@ -13,7 +13,6 @@
           </div>
           <div v-if="currentUser"><strong>{{currentUser.name | shortName}} &nbsp;</strong></div>
           <div @click="clickHowtoplay" style="padding: 3px 10px 0 0; cursor: pointer;"><i class="material-icons">info_outline</i></div>
-          <div class="_full-height"></div>
           <!--<div @click="clickCollection" class="_full-height _color-warning">
             <div
               class="_full-height _flex-row _cross-center _main-center"
@@ -133,10 +132,10 @@ $navbar-height: 50px;
 
 .no-room-message {
   position: relative;
-  top: 5vh;
   color: white;
   font-size: 1.25em;
   text-align: center;
-  background-color: #6F6F6F;
+  background-color: rgba(111, 111, 111, 0.55);
+  padding: 20px;
 }
 </style>
