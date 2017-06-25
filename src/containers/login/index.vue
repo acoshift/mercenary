@@ -2,11 +2,16 @@
   <div class="login">
     <div class="grid-container" style="max-width: 500px">
       <div class="_flex-column _cross-center _full-width">
-        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 400px;">
+        <img class="lunar-block-bigger" src="~@/assets/logo.png" width="100%" style="max-width: 250px;">
         <div class="_full-width">
           <div class="col-xs-12">
             <button class="lunar-button2 _bg-color-accent _full-width" @click="login">
               <h3 class="_no-margin">Login with Facebook</h3>
+            </button>
+          </div>
+          <div class="col-xs-12" style="padding-top: 20px;">
+            <button class="lunar-button2 _full-width" @click="goHowtoplay">
+              <h3 class="_no-margin" style="color: #2e363e;">How to play?</h3>
             </button>
           </div>
         </div>
@@ -24,6 +29,9 @@ export default {
     login () {
       SFX.playClick()
       Auth.login()
+    },
+    goHowtoplay () {
+      console.log('go how to play?')
     }
   }
 }
