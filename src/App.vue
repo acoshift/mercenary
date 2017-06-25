@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="_full-height">
-    <div class="loader-container _flex-row _main-center _cross-center" :class="{show: isViewLoading}">
+    <div class="loader-container _flex-row _main-center _cross-center" v-if="isViewLoading">
       <div class="loader"></div>
     </div>
     <router-view class="_full-height"></router-view>
