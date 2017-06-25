@@ -110,7 +110,9 @@ export default {
               .ref(`room/${this.room.$key}/member/${this.me.id}/hp`)
               .transaction((hp) => {
                 if (hp <= 0) return
-                return hp + ev.value
+                let h = hp + ev.value
+                if (h > this.me.maxHp) h = this.me.maxHp
+                return h
               })
             return
           }
@@ -230,11 +232,12 @@ export default {
         case 'heal':
           const v = this.randRange(this.me.skillAtk, 50)
           Room.sendBattleRoomEvent(this.room.$key, { skill: 'heal', value: v })
+          setTimeout(() => { this.bossAttack() }, 2000)
           break
         case 'matk':
           const m = Math.floor(Math.random() * 6) + 1
           const dmg = m * this.randRange(this.me.skillAtk, 20)
-          this.playSkillAssassin()
+          SFX.playSkillAssassin()
           firebase.database()
             .ref(`room/${this.room.$key}/boss/hp`)
             .transaction((hp) => {
@@ -250,7 +253,7 @@ export default {
           break
         case 'fireball':
           const mdmg = this.randRange(this.me.skillAtk, 200)
-          this.playSkillMage()
+          SFX.playSkillMage()
           firebase.database()
             .ref(`room/${this.room.$key}/boss/hp`)
             .transaction((hp) => {
