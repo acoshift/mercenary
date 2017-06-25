@@ -47,7 +47,7 @@
         },
         "member": {
           "$user_id": {
-            ".write": "$user_id === auth.uid && !root.child('room/' + $room_id).exists()",
+            ".write": "$user_id === auth.uid && !root.child('room/' + $room_id).exists() && !data.parent().child('state').exists()",
             ".validate": "$user_id === auth.uid && (newData.val() === null || root.child('job/' + newData.val()).exists())"
           }
         },
