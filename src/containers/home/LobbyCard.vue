@@ -8,7 +8,7 @@
 
     <div class="lunar-segment">
       <div class="lunar-block"><strong>Host:</strong> {{host.name}}</div>
-      <div class="lunar-block"><strong>Member:</strong> {{member}}/5</div>
+      <div class="lunar-block"><strong>Member:</strong> {{member}}</div>
     </div>
 
   </div>
