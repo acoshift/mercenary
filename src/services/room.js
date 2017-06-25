@@ -89,7 +89,7 @@ export const join = (roomId, jobId) => Firebase
   .set(`room-member/${roomId}/member/${firebase.auth().currentUser.uid}`, jobId)
   .flatMap(() => User.setCurrentRoom(roomId))
 
-export const start = () => getMemberRoom
+export const start = () => getMemberRoom()
   .flatMap((room) => Firebase.set(`room-member/${room.$key}/state`, 1), (room) => room)
   .flatMap((room) => Firebase.set(`room/${room.$key}`, {
     boss: {
@@ -106,6 +106,8 @@ export const start = () => getMemberRoom
       photo: x.photo,
       hp: x.job.hp,
       maxHp: x.job.hp,
-      jobPhoto: x.job.photo
+      jobPhoto: x.job.photo,
+      skill: x.job.skill,
+      skillCt: x.job.skillCt
     }) : null)
   }), (room) => room)
