@@ -21,7 +21,7 @@
               <div class="party lunar-block-big" v-if="room">
 
                 <div v-for="(m, i) in members" :key="i" v-if="m" class="member _flex-row lunar-block">
-                  <img src="~@/assets/skill/heal.png" width="30" height="30">
+                  <img :src="`/static/skill/${m.skill}.png`" width="30" height="30">
                   <div class="_flex-column _flex-span">
                     <div class="_color-light"><strong>{{m.name}}</strong></div>
                     <div class="member-hp">
@@ -88,7 +88,15 @@ export default {
   subscriptions () {
     const $room = Room.getBattleRoom()
     return {
-      room: $room.do(console.log),
+      room: $room
+        .do(console.log)
+        .do((room) => {
+          this.$nextTick(() => {
+            if (this.me.hp <= 0 && room.member.filter(Boolean).length <= 1) {
+              Room.endBattle(room.$key).subscribe()
+            }
+          })
+        }),
       roomEvent: $room
         .switchMap(() => Room.getBattleRoomEvent())
         .do(console.log)
@@ -285,6 +293,10 @@ export default {
             if (this.skillCt < this.me.skillCt) this.skillCt++
           }, 1000)
         })
+    },
+    leave () {
+      if (!this.room) return
+      Room.leaveBattle(this.room.$key).subscribe()
     }
   },
   computed: {

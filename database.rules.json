@@ -35,7 +35,7 @@
     "room-member": {
       ".read": true,
       "$room_id": {
-        ".write": "!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)",
+        ".write": "(!data.exists() || (data.exists() && newData.val() === null && data.child('host').val() === auth.uid)) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         "host": {
           ".validate": "!data.exists() && newData.val() === auth.uid"
         },
@@ -57,7 +57,7 @@
     },
     "room": {
       "$room_id": {
-        ".write": "!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid",
+        ".write": "(!data.exists() && root.child('room-member/' + $room_id + '/host').val() === auth.uid) || (data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists())",
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "boss": {
           "id": {
@@ -81,6 +81,7 @@
     "room-event": {
       "$room_id": {
         ".read": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
+        ".write": "data.exists() && newData.val() === null && root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()",
         "$event_id": {
           ".write": "root.child('room-member/' + $room_id + '/member/' + auth.uid).exists()"
         },
